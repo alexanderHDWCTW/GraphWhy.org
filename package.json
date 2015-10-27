@@ -1,0 +1,22 @@
+{
+  "name": "passing-props",
+  "description": "trying to understand components for a larger file",
+  "main": "server.js",
+  "dependencies": {
+    "body-parser": "^1.4.3",
+    "express": "^4.4.5",
+    "react": "^0.14.0",
+    "react-dom": "^0.14.0"
+  },
+  "devDependencies": {
+    "babelify": "^6.4.0",
+    "browserify": "^12.0.0"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build-js": "browserify -t [babelify] public/main.jsx > public/bundle.js",
+    "build": "npm run build-js",
+    "start": "node server.js"
+  }
+
+}
