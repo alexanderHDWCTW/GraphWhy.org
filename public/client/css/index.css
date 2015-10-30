@@ -27,6 +27,15 @@ h1{
     -webkit-transition: width 1s; /* Safari 3.1 to 6.0 */
     transition: width 1s;
 }
+.drawer.fixed.mui--hidden-xs.mui-col-sm-3.mui-col-lg-2{
+	display:block;
+	height:100vh;
+	overflow: scroll;
+	background-color: #fefefe;
+	padding:0px;
+    -webkit-transition: width 1s; /* Safari 3.1 to 6.0 */
+    transition: width 1s;
+}
 .drawer header{
 	padding:1px 15px;
 }
@@ -93,7 +102,7 @@ h1{
 }
 .drawer .signin-social .mui-col-xs-6 .mui-btn{ 
 	position: absolute;
-	right: 0;
+	right: 20px;
 	bottom: 0;
 }
 

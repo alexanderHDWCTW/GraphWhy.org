@@ -55,12 +55,12 @@ var Drawer = React.createClass({
 				<div className="mui-divider"></div>
 				<br/>
 				<ul>
+					<SigninButton />
+					<LoginButton />
 					<li className='category'><b>Questions</b></li>
 					<ul className='sub'>
 						{questionTitles}
 					</ul>
-					<SigninButton />
-					<LoginButton />
 				</ul>
 			</div>
 		);
@@ -119,7 +119,7 @@ var Main = React.createClass({
 			<div className="main mui-row"><br/>
 				<Question activeQuestion={this.props.activeQuestion}
 								  questions={this.props.questions} />
-
+				<AboutUs />
 			</div>
 		);
 	}
@@ -217,7 +217,7 @@ var Data = React.createClass({
 					<span>E</span>
 				</div>
 				<div className='centerSVG'>
-				<Chart className='centerSVG' width='300px' height='200px'>
+				<Chart className='centerSVG' width='450px' height='200px'>
 					<DataSeries data={data}
 									//	  questions={this.props.questions}
 									//	  activeQuestion={this.props.activeQuestion}
@@ -255,7 +255,7 @@ var DataSeries = React.createClass({
     var props = this.props;
     var xScale = d3.scale.linear()
       .domain([0, d3.max(this.props.data)])
-      .range([0, 100]);
+      .range([0, 180]);
     var yScale = d3.scale.ordinal()
       .domain(d3.range(this.props.data.length))
       .rangeRoundBands([0, this.props.height], 0.05);
@@ -441,13 +441,46 @@ var Signup = React.createClass({
 	} 
 });
 
+var AboutUs = React.createClass ({
+	render: function(){
+		return (
+			<div className="mui-col-xs-12 mui-col-sm-10 mui-col-sm-offset-1"><br/><br/>
+				<h1> Where Am I? </h1>
+				<div className='box'>
+					<p>Welcome to GraphWhy.org.  This is the 2nd prototype in a series of sites designed to educate the American public on pressing issues.
+					</p>
+					<p>GraphWhy.org currently does not allow anyone to ask questions, and does not allow anyone to leave comments. If you would like to contribute more than a vote please email Alexander.McNulty92@gmail.com</p>
+				</div><br/>
+				<h1> The Problem </h1>
+				<div className='box'>
+					<p>We believe, that most political conversations are filled with sh*t.</p>
+					<p>We believe, that American media fills the mind of the public with cr*p.</p>
+					<p>We believe, that the US working class if getting f*cked</p>
+				</div><br/>
+				<h1> The Solution </h1>
+				<div className='box'>
+					<p>Share your opinions with everyone </p>
+					<p>Understand the opinions of others </p>
+					<p>Scrutinize the authorities in that space</p>
+				</div><br/>
+				<h1> How </h1>
+				<div className='box'>
+					<p>Share your opinions with everyone </p>
+					<p>Understand the opinions of others </p>
+					<p>Scrutinize the authorities in that space</p>
+				</div>
+			</div>
+		);
+	}
+});
+
 var QUESTIONS = [
 	{
 		id: 0,
 		route:["FederalDebt", "/"],
 		category: "Question",
 		breadcrumb: "Federal Debt",
-		title		: "How important is the paying off the federal debt?",
+		title		: "How important is the US federal debt?",
 		options :	[
 								" A - USA's #1 Priority",
 								" B - USA's #2 Priority",
@@ -475,6 +508,65 @@ var QUESTIONS = [
 	},
 	{
 		id: 1,
+		route:["FederalDebt", "/"],
+		category: "Question",
+		breadcrumb: "Federal Debt",
+		title		: "In ten years, will the average american have more buying power?",
+		options :	[
+								" A - Yes",
+								" B - No"
+							],
+		votes 	: [
+								"5",   //E
+								"6"   //D
+							],
+		comments: [	
+								{
+									vote:"A",
+									name:"Seth Green",
+									title:"Actor",
+									date:"10/24/2015",
+									comment:"Lorem ipsum dolor sit amet, in quando saperet rationibus usu, ex duo mundi evertitur. Et sea quas erroribus. Idque latine lucilius at vim, per numquam aliquando et. Nemore utamur an vim. Legendos gloriatur qui ei, cu verear urbanitas vix. Nostro iisque nominavi ut mea. An sint viris fastidii vis, appareat inimicus volutpat ea ius. Eam ei erant docendi vivendum. Feugiat accusamus interpretaris ei mei, ea dico qualisque intellegebat qui. An quo lorem fugit, assum laudem vidisse nam eu. Mel quas mandamus efficiantur ne, cu cum sumo nulla tempor, ea duo partem volutpat gubergren. Per nibh vidit percipitur eu. Eam tempor blandit delicatissimi an. Te vidit rebum pro, his altera causae cu, sea ea novum mundi epicurei. In pri erant convenire, everti abhorreant his in, qui at augue ridens similique. Altera mnesarchum has cu, cum ad paulo bonorum. Ut vix discere omnesque. Cu eos nulla erant audire, ut affert graeco nominati nec. Quo et legere nostro inciderint, in appetere principes vel, ut mel quem vivendum instructior. Vulputate argumentum ne qui, eum nobis eleifend an, ex sale solum sit. Soluta nominavi contentiones et mei, iriure consetetur eu sit, delenit molestie vel eu. Nostrud insolens in mea, nobis minimum officiis eum ne. Mel at everti debitis incorrupte, an has quot malis error, eos et tale adhuc voluptatibus. An appetere corrumpit scribentur nam. Et nam petentium interesset, ius ex error paulo putant. Nam autem equidem disputationi et, sed id persius debitis tibique, mei ex adipisci electram. Vix in tota harum laudem, vim no omnium civibus. Ea mea novum suavitate, nec odio similique et."
+								}
+							],
+		active: true
+	},
+	{
+		id: 1,
+		route:["FederalDebt", "/"],
+		category: "Question",
+		breadcrumb: "Federal Debt",
+		title		: "How much air time by mass media is bullshit",
+		options :	[
+								" 100%",
+								" 90%",
+								" 80%",
+								" 70%",
+								" 60%",
+								" 50%",
+								" 40%",
+								" 30%",
+								" 20%",
+								" 10%",
+								" 0%"
+							],
+		votes 	: [
+								"5",   //E
+								"6"   //D
+							],
+		comments: [	
+								{
+									vote:"A",
+									name:"Seth Green",
+									title:"Actor",
+									date:"10/24/2015",
+									comment:"Lorem ipsum dolor sit amet, in quando saperet rationibus usu, ex duo mundi evertitur. Et sea quas erroribus. Idque latine lucilius at vim, per numquam aliquando et. Nemore utamur an vim. Legendos gloriatur qui ei, cu verear urbanitas vix. Nostro iisque nominavi ut mea. An sint viris fastidii vis, appareat inimicus volutpat ea ius. Eam ei erant docendi vivendum. Feugiat accusamus interpretaris ei mei, ea dico qualisque intellegebat qui. An quo lorem fugit, assum laudem vidisse nam eu. Mel quas mandamus efficiantur ne, cu cum sumo nulla tempor, ea duo partem volutpat gubergren. Per nibh vidit percipitur eu. Eam tempor blandit delicatissimi an. Te vidit rebum pro, his altera causae cu, sea ea novum mundi epicurei. In pri erant convenire, everti abhorreant his in, qui at augue ridens similique. Altera mnesarchum has cu, cum ad paulo bonorum. Ut vix discere omnesque. Cu eos nulla erant audire, ut affert graeco nominati nec. Quo et legere nostro inciderint, in appetere principes vel, ut mel quem vivendum instructior. Vulputate argumentum ne qui, eum nobis eleifend an, ex sale solum sit. Soluta nominavi contentiones et mei, iriure consetetur eu sit, delenit molestie vel eu. Nostrud insolens in mea, nobis minimum officiis eum ne. Mel at everti debitis incorrupte, an has quot malis error, eos et tale adhuc voluptatibus. An appetere corrumpit scribentur nam. Et nam petentium interesset, ius ex error paulo putant. Nam autem equidem disputationi et, sed id persius debitis tibique, mei ex adipisci electram. Vix in tota harum laudem, vim no omnium civibus. Ea mea novum suavitate, nec odio similique et."
+								}
+							],
+		active: true
+	},
+	{
+		id: 2,
 		route:"DrugLaw",
 		category: "Question",
 		breadcrumb: "Drug Law",
