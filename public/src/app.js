@@ -24,6 +24,13 @@ var App = React.createClass({
 	}
 });
 var Drawer = React.createClass({
+
+	getInitialState: function() {
+		return {showLogin: false};
+	},
+	onClick: function() {
+		this.setState({show})
+	},
 	render: function() {
 		var questionTitles = [];
 		for (var i=0; i < this.props.questions.length; i++) {
@@ -52,8 +59,8 @@ var Drawer = React.createClass({
 					<ul className='sub'>
 						{questionTitles}
 					</ul>
-						<Login />
-						<Signup />
+					<SigninButton />
+					<LoginButton />
 				</ul>
 			</div>
 		);
@@ -152,12 +159,16 @@ var Question = React.createClass({
 	}
 });
 var VoteField = React.createClass({
+<<<<<<< HEAD
 	/*incrementVote: function(){
 	
 		//alert($('input[name=radioName]:checked', '#myForm').val()); 
 		this.props.questions[this.props.activeQuestion].votes[0]++;
 		
 	},*/
+=======
+
+>>>>>>> 0dfb332ed37b566956086e98ee5f83551bf86893
 	render: function(){
 		var activeQuestion = this.props.activeQuestion;
 		var	options = [];
@@ -315,11 +326,43 @@ var Comments = React.createClass({
 });
 
 
+var SigninButton =  React.createClass({
+	getInitialState: function() {
+		return { showSignin: false};
+	},
+	onClick: function() {
+		this.setState({showSignin: !this.state.showSignin});
+	},
+	render: function() {
+		return (
+			<div>
+			<li className='category' onClick={this.onClick} ><b>Signin</b></li>
+			{ this.state.showSignin ? <Signup /> : null }
+			</div>
+		);
+	}
+});
+var LoginButton =  React.createClass({
+	getInitialState: function() {
+		return { showLogin: false};
+	},
+	onClick: function() {
+		this.setState({showLogin: !this.state.showLogin});
+	},
+	render: function() {
+		return (
+			<div>
+			<li className='category' onClick={this.onClick} ><b>Login</b></li>
+			{ this.state.showLogin ? <Login /> : null }
+			</div>
+		);
+	}
+});
+
 var Login = React.createClass({
 	render: function() {
 		return(
 			<div className="box">
-				<li className='category'><b>Login</b></li>
 				<form name="login">
 					<ul className='signin'>
 						<li>
@@ -360,7 +403,6 @@ var Signup = React.createClass({
 	render: function() {
 		return(
 			<div className="box">
-				<li className='category'><b>Sign Up</b></li>
 				<form name="login">
 					<ul className='signin'>
 						<li>
