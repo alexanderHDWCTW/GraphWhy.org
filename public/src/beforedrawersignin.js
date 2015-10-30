@@ -24,6 +24,7 @@ var App = React.createClass({
 	}
 });
 var Drawer = React.createClass({
+
 	render: function() {
 		var questionTitles = [];
 		for (var i=0; i < this.props.questions.length; i++) {
@@ -52,8 +53,12 @@ var Drawer = React.createClass({
 					<ul className='sub'>
 						{questionTitles}
 					</ul>
-						<Login />
-						<Signup />
+					<li className='category'><b>Profile</b></li>
+					<ul className='sub'>
+//						{visitorTitles}
+				<Signup />
+				<Login />
+					</ul>	
 				</ul>
 			</div>
 		);
@@ -76,7 +81,12 @@ var ProfileLink = React.createClass({
 	render: function() {
 		return(
 			<li>{this.props.title}</li>
-
+//			<li>
+//				<Signup />
+//			</li>
+//			<li>
+//				<Login />
+//			</li>
 		);
 	}
 });
@@ -118,6 +128,7 @@ var Main = React.createClass({
 	}
 });
 
+
 var Question = React.createClass({
 	render: function() {
 		var activeQuestion = this.props.activeQuestion;
@@ -134,6 +145,7 @@ var Question = React.createClass({
 		);
 	}
 });
+
 var VoteField = React.createClass({
 	render: function(){
 		var activeQuestion = this.props.activeQuestion;
@@ -154,6 +166,7 @@ var VoteField = React.createClass({
 		);
 	}
 });
+
 var RadioOption = React.createClass({
 	render: function() {
 		return(
@@ -170,6 +183,7 @@ var RadioOption = React.createClass({
 		);
 	}
 });
+
 
 var Data = React.createClass({
 	render: function(){
@@ -272,6 +286,8 @@ var Chart = React.createClass({
   }
 });
 
+
+
 var Comments = React.createClass({
 	render: function(){
 		var activeQuestion = this.props.activeQuestion;
@@ -291,43 +307,32 @@ var Comments = React.createClass({
 	}
 });
 
-
 var Login = React.createClass({
 	render: function() {
 		return(
-			<div className="box">
-				<li className='category'><b>Login</b></li>
-				<form name="login">
-					<ul className='signin'>
-						<li>
-							<div className="mui-textfield mui-textfield--float-label">
-								<input type="text" />
-								<label>Username/Email</label>
-							</div>
-						</li>
-						<li>
-							<div className="mui-textfield mui-textfield--float-label">
-								<input type="password" />
-								<label>Password</label>
-							</div>
-						</li>
-					</ul>
-				<div className="signin-social">
-					<br/>
-					<div className='mui-col-xs-6'>
-					<span>Use:</span>
-					<img className="standard-img" src="client/img/signin-facebook.png" />
-					<img className="standard-img" src="client/img/signin-google.png" />
-					</div>
-					<div className='mui-col-xs-6'>
-						<button className="mui-btn mui-btn--small mui-btn--primary mui--pull-right">Submit</button>
-					</div>
-					<br/>
-					<br/>
-					<br/>
-				</div>
+			<div className="mui-col-xs-12 mui-col-sm-6 mui-col-sm-offset-3">
 				<br/>
-				</form>
+				<br/>
+				<h1>Login</h1>
+				<div className="box">
+					<br/>
+					<form name="login">
+						<div className="mui-textfield mui-textfield--float-label">
+							<input type="text" />
+							<label>Username/Email</label>
+						</div>
+						<div className="mui-textfield mui-textfield--float-label">
+							<input type="text" />
+							<label>Password</label>
+						</div>
+						<div className="signin-social">
+							<br/>
+							<img className="standard-img" src="client/img/signin-facebook.png" />
+							<img className="standard-img" src="client/img/signin-google.png" />
+							<br/>
+						</div>
+					</form>
+				</div>
 			</div>
 		);
 	} 
@@ -336,51 +341,37 @@ var Login = React.createClass({
 var Signup = React.createClass({
 	render: function() {
 		return(
-			<div className="box">
-				<li className='category'><b>Sign Up</b></li>
-				<form name="login">
-					<ul className='signin'>
-						<li>
-							<div className="mui-textfield mui-textfield--float-label">
-								<input type="text" />
-								<label>Email</label>
-							</div>
-						</li>
-						<li>
-							<div className="mui-textfield mui-textfield--float-label">
-								<input type="text" />
-								<label>Username</label>
-							</div>
-						</li>
-						<li>
-							<div className="mui-textfield mui-textfield--float-label">
-								<input type="password" />
-								<label>Password</label>
-							</div>
-						</li>
-						<li>
-							<div className="mui-textfield mui-textfield--float-label">
-								<input type="password" />
-								<label>Confirm Password</label>
-							</div>
-						</li>
-					</ul>
-				<div className="signin-social">
-					<br/>
-					<div className='mui-col-xs-6'>
-					<span>Use:</span>
-					<img className="standard-img" src="client/img/signin-facebook.png" />
-					<img className="standard-img" src="client/img/signin-google.png" />
-					</div>
-					<div className='mui-col-xs-6'>
-						<button className="mui-btn mui-btn--small mui-btn--primary mui--pull-right">Submit</button>
-					</div>
-					<br/>
-					<br/>
-					<br/>
-				</div>
+			<div className="mui-col-xs-12 mui-col-sm-6 mui-col-sm-offset-3">
 				<br/>
-				</form>
+				<br/>
+				<h1>Sign Up</h1>
+				<div className="box">
+					<br/>
+					<form name="login">
+						<div className="mui-textfield mui-textfield--float-label">
+							<input type="text" />
+							<label>Email</label>
+						</div>
+						<div className="mui-textfield mui-textfield--float-label">
+							<input type="text" />
+							<label>Username</label>
+						</div>
+						<div className="mui-textfield mui-textfield--float-label">
+							<input type="text" />
+							<label>Password</label>
+						</div>
+						<div className="mui-textfield mui-textfield--float-label">
+							<input type="text" />
+							<label>Confirm Password</label>
+						</div>
+						<div className="signin-social">
+							<br/>
+							<img className="standard-img" src="client/img/signin-facebook.png" />
+							<img className="standard-img" src="client/img/signin-google.png" />
+							<br/>
+						</div>
+					</form>
+				</div>
 			</div>
 		);
 	} 
