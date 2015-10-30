@@ -159,16 +159,6 @@ var Question = React.createClass({
 	}
 });
 var VoteField = React.createClass({
-<<<<<<< HEAD
-	/*incrementVote: function(){
-	
-		//alert($('input[name=radioName]:checked', '#myForm').val()); 
-		this.props.questions[this.props.activeQuestion].votes[0]++;
-		
-	},*/
-=======
-
->>>>>>> 0dfb332ed37b566956086e98ee5f83551bf86893
 	render: function(){
 		var activeQuestion = this.props.activeQuestion;
 		var	options = [];
