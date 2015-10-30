@@ -119,15 +119,32 @@ var Main = React.createClass({
 });
 
 var Question = React.createClass({
+	getInitialState: function() {
+      return {
+        questions: this.props.questions
+    	};
+    },
+	incrementVote: function(){
+		var tempstate = this.state;
+		tempstate.questions[this.props.activeQuestion].votes[
+		this.props.questions[
+
+		this.props.activeQuestion].options.length-
+		$('input[name=radioName]:checked', '#myForm').val()-1
+
+		]++;
+		this.setState(tempstate);
+	
+	},
 	render: function() {
 		var activeQuestion = this.props.activeQuestion;
 		return(
 			<div className="mui-col-xs-12 mui-col-sm-10 mui-col-sm-offset-1"><br/><br/>
 				<h1> {this.props.questions[activeQuestion].title} </h1>
 				<VoteField activeQuestion={this.props.activeQuestion}
-									 questions={this.props.questions}/>
+									 questions={this.props.questions} func={this.incrementVote}/>
 				<Data activeQuestion={this.props.activeQuestion}
-							questions={this.props.questions}/>
+							questions={this.state.questions}/>
 				<Comments activeQuestion={this.props.activeQuestion}
 								  questions={this.props.questions}/>
 			</div>
@@ -135,21 +152,27 @@ var Question = React.createClass({
 	}
 });
 var VoteField = React.createClass({
+	/*incrementVote: function(){
+	
+		//alert($('input[name=radioName]:checked', '#myForm').val()); 
+		this.props.questions[this.props.activeQuestion].votes[0]++;
+		
+	},*/
 	render: function(){
 		var activeQuestion = this.props.activeQuestion;
 		var	options = [];
 		for (var i=0; i < this.props.questions[activeQuestion].options.length; i++){
-			options.push(<RadioOption options={this.props.questions[activeQuestion].options[i]} /> );
+			options.push(<RadioOption options={this.props.questions[activeQuestion].options[i]} index={i}/> );
 		}
 		return(
 			<div className="box">
-				<form name="vote-field">
-					{options}
+					<form id="myForm">
+						{options}
+					</form>
 					<hr/>
 					<span className='mui--pull-right'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-				  <button className="mui-btn mui-btn--small mui-btn--primary mui--pull-right">Submit</button>
+				  <button className="mui-btn mui-btn--small mui-btn--primary mui--pull-right" onClick={this.props.func}>Submit</button>
 				  <div className="mui--clearfix"></div>
-				</form> 
 			</div>
 		);
 	}
@@ -158,9 +181,9 @@ var RadioOption = React.createClass({
 	render: function() {
 		return(
 			<div className="mui-checkbox">
-				<label >
+				<label>
 					<div className='mui--pull-left optionBox'>
-						<input name='one' type="radio"/>
+						<input value={this.props.index} name="radioName" type="radio"/>
 						<div className='mui--pull-right optionText'>
 							{this.props.options}
 						</div>
