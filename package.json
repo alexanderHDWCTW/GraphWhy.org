@@ -2,11 +2,16 @@
   "name": "passing-props",
   "description": "trying to understand components for a larger file",
   "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
   "dependencies": {
     "body-parser": "^1.4.3",
     "express": "^4.4.5",
     "react": "^0.14.0",
-    "react-dom": "^0.14.0"
+    "react-dom": "^0.14.0",
+    "mongodb": "*",
+    "mongoose": "*"
   },
   "devDependencies": {
     "babelify": "^6.4.0",
