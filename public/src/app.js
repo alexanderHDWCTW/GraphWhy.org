@@ -5,12 +5,10 @@ var App = React.createClass({
 	getInitialState: function() {
 		return store;
 	},
-
 	changeCenter: function(id) {
 		store.activeQuestion = id;
 		this.setState(store);
 	},
-
 	render: function() {
 		return(
 		<div>
@@ -61,7 +59,7 @@ var Drawer = React.createClass({
 					<ul className='sub'>
 						{questionTitles}
 					</ul>
-				</ul>
+					</ul>
 			</div>
 		);
 	}
@@ -74,9 +72,15 @@ var QuestionLink = React.createClass({
 		}
 	},
 	render: function() {
+		if (this.props.title == "About Us") {
+		return (
+			<li className="fakeRoot" onClick={ this.handleClick(this.props.id) }>{this.props.title}</li>
+		);
+		} else {
 		return(
 			<li onClick={ this.handleClick(this.props.id) }>{this.props.title}</li>
 		);
+		}
 	}	
 });
 var ProfileLink = React.createClass({
@@ -94,9 +98,11 @@ var Center = React.createClass({
 		return(
 			<div className="center mui-col-xs-12 mui-col-sm-9 mui-col-lg-10">
 				<Header activeQuestion={this.props.activeQuestion}
-								questions={this.props.questions} visitor={this.props.visitor} />
+								questions={this.props.questions}
+								visitor={this.props.visitor} />
 				<Main activeQuestion={this.props.activeQuestion}
-							questions={this.props.questions} visitor={this.props.visitor} />
+							questions={this.props.questions} 
+							visitor={this.props.visitor} />
 			</div>
 		);
 	}
@@ -119,7 +125,6 @@ var Main = React.createClass({
 			<div className="main mui-row"><br/>
 				<Question activeQuestion={this.props.activeQuestion}
 								  questions={this.props.questions} />
-				<AboutUs />
 			</div>
 		);
 	}
@@ -145,6 +150,15 @@ var Question = React.createClass({
 	},
 	render: function() {
 		var activeQuestion = this.props.activeQuestion;
+		if (this.props.questions[activeQuestion].title == "About Us") {
+		return (
+			<div className="mui-col-xs-12 mui-col-sm-10 mui-col-sm-offset-1"><br/><br/>
+				<h1> {this.props.questions[activeQuestion].title} </h1>
+				<Comments activeQuestion={this.props.activeQuestion}
+								  questions={this.props.questions}/>
+			</div>
+		);
+		} else {
 		return(
 			<div className="mui-col-xs-12 mui-col-sm-10 mui-col-sm-offset-1"><br/><br/>
 				<h1> {this.props.questions[activeQuestion].title} </h1>
@@ -156,6 +170,7 @@ var Question = React.createClass({
 								  questions={this.props.questions}/>
 			</div>
 		);
+		}
 	}
 });
 var VoteField = React.createClass({
@@ -299,6 +314,11 @@ var Chart = React.createClass({
 var Comments = React.createClass({
 	render: function(){
 		var activeQuestion = this.props.activeQuestion;
+		if (this.props.questions[activeQuestion].title == "About Us") {
+		return (
+			<AboutUs />
+		);
+		} else {
 		return(
 			<div className="box">
 				<div>
@@ -312,6 +332,7 @@ var Comments = React.createClass({
 				</div>
 			</div>
 		);
+	}
 	}
 });
 
@@ -441,33 +462,48 @@ var Signup = React.createClass({
 	} 
 });
 
+var AboutUsButton =  React.createClass({
+	render: function() {
+		return (
+			<div>
+				<li className='category'><b>About Us</b></li>
+			</div>
+		);
+	}
+});
+
+
 var AboutUs = React.createClass ({
 	render: function(){
 		return (
-			<div className="mui-col-xs-12 mui-col-sm-10 mui-col-sm-offset-1"><br/><br/>
-				<h1> Where Am I? </h1>
+			<div className='aboutUs'>
+				<br/>
+				<h4>Where am I?</h4>
 				<div className='box'>
-					<p>Welcome to GraphWhy.org.  This is the 2nd prototype in a series of sites designed to educate the American public on pressing issues.
+					<p>Welcome to GraphWhy.org. Our objective is to educate the American public on important social issues.
 					</p>
-					<p>GraphWhy.org currently does not allow anyone to ask questions, and does not allow anyone to leave comments. If you would like to contribute more than a vote please email Alexander.McNulty92@gmail.com</p>
 				</div><br/>
-				<h1> The Problem </h1>
+				<h4> The Problem </h4>
 				<div className='box'>
 					<p>We believe, that most political conversations are filled with sh*t.</p>
 					<p>We believe, that American media fills the mind of the public with cr*p.</p>
-					<p>We believe, that the US working class if getting f*cked</p>
+					<p>We believe, that the US working class if getting f*cked.</p>
 				</div><br/>
-				<h1> The Solution </h1>
+				<h4> The Solution </h4>
 				<div className='box'>
 					<p>Share your opinions with everyone </p>
 					<p>Understand the opinions of others </p>
 					<p>Scrutinize the authorities in that space</p>
 				</div><br/>
-				<h1> How </h1>
+				<h4> How </h4>
 				<div className='box'>
 					<p>Share your opinions with everyone </p>
 					<p>Understand the opinions of others </p>
 					<p>Scrutinize the authorities in that space</p>
+				</div><br/>
+				<h4> Support </h4>
+				<div className='box'>
+					<p>GraphWhy.org currently does not allow anyone to ask questions, and does not allow anyone to leave comments. If you would like to contribute more than a vote please email Alexander.McNulty92@gmail.com</p>
 				</div>
 			</div>
 		);
@@ -532,7 +568,7 @@ var QUESTIONS = [
 		active: true
 	},
 	{
-		id: 1,
+		id: 2,
 		route:["FederalDebt", "/"],
 		category: "Question",
 		breadcrumb: "Federal Debt",
@@ -566,7 +602,7 @@ var QUESTIONS = [
 		active: true
 	},
 	{
-		id: 2,
+		id: 3,
 		route:"DrugLaw",
 		category: "Question",
 		breadcrumb: "Drug Law",
@@ -595,8 +631,26 @@ var QUESTIONS = [
 								}
 							],
 		active: false
-	}];
-var VISITOR= [
+	},
+	{
+	id: 4 ,
+	route:"AboutUs",
+	category: "Info",
+	breadcrumb: "About Us",
+	title: "About Us",
+	options : [],
+	votes: [],
+	comments: 			"<div className='mui-col-xs-12 mui-col-sm-10 mui-col-sm-offset-1 aboutUs'><br/><br/><h1> About Us </h1><h4>Where am I?</h4><div className='box'><p>Welcome to GraphWhy.org. Our objective is to educate the American public on important social issues.</p></div><br/><h4> The Problem </h4><div className='box'><p>We believe, that most political conversations are filled with sh*t.</p><p>We believe, that American media fills the mind of the public with cr*p.</p><p>We believe, that the US working class if getting f*cked.</p></div><br/><h4> The Solution </h4><div className='box'><p>Share your opinions with everyone </p><p>Understand the opinions of others </p><p>Scrutinize the authorities in that space</p></div><br/><h4> How </h4><div className='box'><p>Share your opinions with everyone </p><p>Understand the opinions of others </p><p>Scrutinize the authorities in that space</p></div><br/><h4> Support </h4><div className='box'><p>GraphWhy.org currently does not allow anyone to ask questions, and does not allow anyone to leave comments. If you would like to contribute more than a vote please email Alexander.McNulty92@gmail.com</p></div></div>"}
+];
+var INFO = [ {
+	id: 0,
+	route: "AboutUs",
+	category: "Info",
+	breadcrumb: "About Us",
+	body: 			"<div className='mui-col-xs-12 mui-col-sm-10 mui-col-sm-offset-1 aboutUs'><br/><br/><h1> About Us </h1><h4>Where am I?</h4><div className='box'><p>Welcome to GraphWhy.org. Our objective is to educate the American public on important social issues.</p></div><br/><h4> The Problem </h4><div className='box'><p>We believe, that most political conversations are filled with sh*t.</p><p>We believe, that American media fills the mind of the public with cr*p.</p><p>We believe, that the US working class if getting f*cked.</p></div><br/><h4> The Solution </h4><div className='box'><p>Share your opinions with everyone </p><p>Understand the opinions of others </p><p>Scrutinize the authorities in that space</p></div><br/><h4> How </h4><div className='box'><p>Share your opinions with everyone </p><p>Understand the opinions of others </p><p>Scrutinize the authorities in that space</p></div><br/><h4> Support </h4><div className='box'><p>GraphWhy.org currently does not allow anyone to ask questions, and does not allow anyone to leave comments. If you would like to contribute more than a vote please email Alexander.McNulty92@gmail.com</p></div></div>"
+}
+];
+var VISITOR = [
 	{
 		category: "Profile",
 		breadcrumb: "Login",

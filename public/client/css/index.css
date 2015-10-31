@@ -105,6 +105,17 @@ h1{
 	right: 20px;
 	bottom: 0;
 }
+.drawer .fakeRoot {
+	margin-left: 0px;
+	font-weight: 700;
+	color: #333;
+	width: 100%;
+	margin-top: 8px;
+}
+.drawer .fakeRoot:hover{
+	background-color: #eee;
+	text-decoration: none;
+}
 
 .center{
 	float: right !important;
@@ -139,6 +150,12 @@ h1{
 .main.mui-row{
 	padding: 20px;
 	background-color: #eeeeee;
+}
+.main .aboutUs .box {
+	margin-top: 0;
+}
+.main .aboutUs h1{
+	margin-bottom: 33px;
 }
 
 .signin-social{
