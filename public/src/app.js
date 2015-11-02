@@ -13,10 +13,10 @@ var App = React.createClass({
 		return(
 		<div>
 			<Drawer changeCenter={this.changeCenter}
-						  questions={this.props.questions}
-						  visitor={this.props.visitor} />
+						  questions={this.props.questions}/>
 			<Center activeQuestion={this.state.activeQuestion}
-						  questions={this.props.questions} />
+						  questions={this.props.questions}
+						  changeCenter={this.changeCenter} />					  
 		</div>
 		);
 	}
@@ -36,11 +36,6 @@ var Drawer = React.createClass({
 													  						id={this.props.questions[i].id}
 													  						title={this.props.questions[i].title} />); 
 		}
-		var visitorTitles = [];
-		for (var i = 0; i < this.props.visitor.length; i++) {
-			visitorTitles.push(<ProfileLink changeCenter={this.props.changeCenter}
-																		  title={this.props.visitor[i].title} />); 
-		}
 		return(
 			<div className="fixed drawer mui--hidden-xs mui-col-sm-3 mui-col-lg-2">
 				<header>
@@ -55,7 +50,47 @@ var Drawer = React.createClass({
 				<ul>
 					<SigninButton />
 					<LoginButton />
-					<li className='category'><b>Questions</b></li>
+
+					<li className='category questions'><b>Questions</b></li>
+					<ul className='sub'>
+						{questionTitles}
+					</ul>
+					</ul>
+			</div>
+		);
+	}
+});
+
+var Footer = React.createClass({
+	getInitialState: function() {
+		return {showLogin: false};
+	},
+	onClick: function() {
+		this.setState({show})
+	},
+	render: function() {
+		var questionTitles = [];
+		for (var i=0; i < this.props.questions.length; i++) {
+			questionTitles.push(<QuestionLink changeCenter={this.props.changeCenter}
+													  						id={this.props.questions[i].id}
+													  						title={this.props.questions[i].title} />); 
+		}
+
+		return(
+			<div className="drawer footer mui-col-xs-12 mui--hidden-sm mui--hidden-md mui--hidden-lg">
+				<header className='menuHeader'>
+					<h3>
+						<a href="#">
+							GraphWhy.org
+						</a>
+					</h3>
+				</header>
+				<div className="mui-divider"></div>
+				<br/>
+				<ul>
+					<SigninButton />
+					<LoginButton />
+					<li className='category questions'><b>Questions</b></li>
 					<ul className='sub'>
 						{questionTitles}
 					</ul>
@@ -74,11 +109,11 @@ var QuestionLink = React.createClass({
 	render: function() {
 		if (this.props.title == "About Us") {
 		return (
-			<li className="fakeRoot" onClick={ this.handleClick(this.props.id) }>{this.props.title}</li>
+			<a href='#'><li className="fakeRoot" onClick={ this.handleClick(this.props.id) }>{this.props.title}</li></a>
 		);
 		} else {
 		return(
-			<li onClick={ this.handleClick(this.props.id) }>{this.props.title}</li>
+			<li onClick={ this.handleClick(this.props.id) }><a href='#'>{this.props.title}</a></li>
 		);
 		}
 	}	
@@ -103,6 +138,8 @@ var Center = React.createClass({
 				<Main activeQuestion={this.props.activeQuestion}
 							questions={this.props.questions} 
 							visitor={this.props.visitor} />
+				<Footer changeCenter={this.props.changeCenter}
+						  questions={this.props.questions}/>	
 			</div>
 		);
 	}
@@ -153,7 +190,7 @@ var Question = React.createClass({
 		if (this.props.questions[activeQuestion].title == "About Us") {
 		return (
 			<div className="mui-col-xs-12 mui-col-sm-10 mui-col-sm-offset-1"><br/><br/>
-				<h1> {this.props.questions[activeQuestion].title} </h1>
+				<h1 className='mainHeader'> {this.props.questions[activeQuestion].title} </h1>
 				<Comments activeQuestion={this.props.activeQuestion}
 								  questions={this.props.questions}/>
 			</div>
@@ -161,7 +198,7 @@ var Question = React.createClass({
 		} else {
 		return(
 			<div className="mui-col-xs-12 mui-col-sm-10 mui-col-sm-offset-1"><br/><br/>
-				<h1> {this.props.questions[activeQuestion].title} </h1>
+				<h1 className='mainHeader'> {this.props.questions[activeQuestion].title} </h1>
 				<VoteField activeQuestion={this.props.activeQuestion}
 									 questions={this.props.questions} func={this.incrementVote}/>
 				<Data activeQuestion={this.props.activeQuestion}
@@ -196,14 +233,10 @@ var VoteField = React.createClass({
 var RadioOption = React.createClass({
 	render: function() {
 		return(
-			<div className="mui-checkbox">
+			<div className="mui-radio">
 				<label>
-					<div className='mui--pull-left optionBox'>
 						<input value={this.props.index} name="radioName" type="radio"/>
-						<div className='mui--pull-right optionText'>
 							{this.props.options}
-						</div>
-					</div>
 				</label>
 			</div>
 		);
@@ -259,6 +292,11 @@ var Data = React.createClass({
 		);
 	}
 }); 
+
+<h3>GraphWhy</h3> the public opinion database
+Share your opinion here; all data, except for contact informatino, is available to the public in order to educate and raise awerness.
+
+
 var DataSeries = React.createClass({
   getDefaultProps: function() {
     return {
@@ -347,7 +385,7 @@ var SigninButton =  React.createClass({
 	render: function() {
 		return (
 			<div>
-			<li className='category' onClick={this.onClick} ><b>Signin</b></li>
+			<li className='category signin' onClick={this.onClick} ><b>Signin</b></li>
 			{ this.state.showSignin ? <Signup /> : null }
 			</div>
 		);
@@ -363,7 +401,7 @@ var LoginButton =  React.createClass({
 	render: function() {
 		return (
 			<div>
-			<li className='category' onClick={this.onClick} ><b>Login</b></li>
+			<li className='category signin' onClick={this.onClick} ><b>Login</b></li>
 			{ this.state.showLogin ? <Login /> : null }
 			</div>
 		);
@@ -373,13 +411,13 @@ var LoginButton =  React.createClass({
 var Login = React.createClass({
 	render: function() {
 		return(
-			<div className="box">
+			<div className="">
 				<form name="login">
 					<ul className='signin'>
 						<li>
 							<div className="mui-textfield mui-textfield--float-label">
 								<input type="text" />
-								<label>Username/Email</label>
+								<label>Email</label>
 							</div>
 						</li>
 						<li>
@@ -413,19 +451,13 @@ var Login = React.createClass({
 var Signup = React.createClass({
 	render: function() {
 		return(
-			<div className="box">
+			<div className="">
 				<form name="login">
 					<ul className='signin'>
 						<li>
 							<div className="mui-textfield mui-textfield--float-label">
 								<input type="text" />
 								<label>Email</label>
-							</div>
-						</li>
-						<li>
-							<div className="mui-textfield mui-textfield--float-label">
-								<input type="text" />
-								<label>Username</label>
 							</div>
 						</li>
 						<li>
@@ -462,15 +494,6 @@ var Signup = React.createClass({
 	} 
 });
 
-var AboutUsButton =  React.createClass({
-	render: function() {
-		return (
-			<div>
-				<li className='category'><b>About Us</b></li>
-			</div>
-		);
-	}
-});
 
 
 var AboutUs = React.createClass ({

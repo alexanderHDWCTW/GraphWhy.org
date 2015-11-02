@@ -4,6 +4,8 @@ body{
 	color:#333;
 	letter-spacing: 1px;
 	-webkit-font-smoothing: antialiased;
+	height: 100%;
+	margin: 0pt;
 }
 h1{
 	color:#555;
@@ -17,10 +19,11 @@ h1{
 	width: 100%;
 	z-index: 3;
 }
-
+.drawer.footer {
+	width: 100%;
+}
 .drawer{
 	display:block;
-	height:100vh;
 	overflow: scroll;
 	background-color: #fefefe;
 	padding:0px;
@@ -35,6 +38,10 @@ h1{
 	padding:0px;
     -webkit-transition: width 1s; /* Safari 3.1 to 6.0 */
     transition: width 1s;
+}
+.drawer header.menuHeader {
+	background-color: #fff;
+	box-shadow: none;
 }
 .drawer header{
 	padding:1px 15px;
@@ -60,6 +67,10 @@ h1{
 .drawer ul ul.signin{
 	margin: 0px 0px 0px;
 }
+.drawer ul li.category.questions{
+		padding-top: 24px;
+		border-top:1px solid #dfdfdf;
+}
 .drawer ul li.category{
 	margin-top: 10px;
 }
@@ -71,8 +82,21 @@ h1{
 	color:#444;
 }
 .drawer ul ul span{
-
 	color:#444;
+}
+.drawer ul ul a{
+	color:#444;
+}
+.drawer ul ul .fakeRoot{
+	border-top: 1px solid #dfdfdf;
+	padding-top: 24px;
+}
+.drawer ul ul a .fakeRoot  {
+	color:#333;
+}
+.drawer ul ul a .fakeRoot:hover {
+	color:#333;
+	text-decoration: none;
 }
 .drawer ul ul li.active{
 	color: #558B2F;
@@ -157,7 +181,8 @@ h1{
 .main .aboutUs h1{
 	margin-bottom: 33px;
 }
-
+.main .mainHeader{
+}
 .signin-social{
 	text-align: center;
 }
