@@ -1,5 +1,6 @@
 var store = {
-	activeQuestion: 0
+	activeQuestion: 0,
+	okGotIt: 0
 };
 var App = React.createClass({
 	getInitialState: function() {
@@ -13,9 +14,11 @@ var App = React.createClass({
 		return(
 		<div>
 			<Drawer changeCenter={this.changeCenter}
-						  questions={this.props.questions}/>
+						  questions={this.props.questions}
+						  activeQuestion={this.state.activeQuestion} />
 			<Center activeQuestion={this.state.activeQuestion}
 						  questions={this.props.questions}
+						  okGotIt={this.state.okGotIt} 
 						  changeCenter={this.changeCenter} />					  
 		</div>
 		);
@@ -75,7 +78,6 @@ var Footer = React.createClass({
 													  						id={this.props.questions[i].id}
 													  						title={this.props.questions[i].title} />); 
 		}
-
 		return(
 			<div className="drawer footer mui-col-xs-12 mui--hidden-sm mui--hidden-md mui--hidden-lg">
 				<header className='menuHeader'>
@@ -135,6 +137,7 @@ var Center = React.createClass({
 				<Header activeQuestion={this.props.activeQuestion}
 								questions={this.props.questions}
 								visitor={this.props.visitor} />
+				<Banner okGotIt={this.props.okGotIt} />
 				<Main activeQuestion={this.props.activeQuestion}
 							questions={this.props.questions} 
 							visitor={this.props.visitor} />
@@ -142,6 +145,36 @@ var Center = React.createClass({
 						  questions={this.props.questions}/>	
 			</div>
 		);
+	}
+});
+var Banner = React.createClass({
+	getInitialState: function() {
+		return { okGotIt: true };
+	},
+	onClick: function() {
+		this.setState({okGotIt: !this.state.okGotIt});
+	},
+	render: function() {
+		if (this.state.okGotIt == true) {
+			return(
+				<div className="banner">
+					<div className="bubbleContainer">
+						<h3 className="bubble">GraphWhy</h3>
+					</div>
+					<span onClick={this.onClick} className="close">X</span>
+					<div className="taglineContainer">
+					<br/><br/>
+						<h5>The public opinion database</h5>
+						<h5>Help fight misunderstanding</h5>
+					</div>
+				</div>
+			);
+		} else {
+			return (
+					<div><br/></div>
+			);
+		}
+
 	}
 });
 var Header = React.createClass({
@@ -189,7 +222,7 @@ var Question = React.createClass({
 		var activeQuestion = this.props.activeQuestion;
 		if (this.props.questions[activeQuestion].title == "About Us") {
 		return (
-			<div className="mui-col-xs-12 mui-col-sm-10 mui-col-sm-offset-1"><br/><br/>
+			<div className="mui-col-xs-12 mui-col-sm-10 mui-col-sm-offset-1"><br/>
 				<h1 className='mainHeader'> {this.props.questions[activeQuestion].title} </h1>
 				<Comments activeQuestion={this.props.activeQuestion}
 								  questions={this.props.questions}/>
@@ -197,7 +230,7 @@ var Question = React.createClass({
 		);
 		} else {
 		return(
-			<div className="mui-col-xs-12 mui-col-sm-10 mui-col-sm-offset-1"><br/><br/>
+			<div className="mui-col-xs-12 mui-col-sm-10 mui-col-sm-offset-1"><br/>
 				<h1 className='mainHeader'> {this.props.questions[activeQuestion].title} </h1>
 				<VoteField activeQuestion={this.props.activeQuestion}
 									 questions={this.props.questions} func={this.incrementVote}/>
@@ -225,7 +258,15 @@ var VoteField = React.createClass({
 					<hr/>
 					<span className='mui--pull-right'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
 				  <button className="mui-btn mui-btn--small mui-btn--primary mui--pull-right" onClick={this.props.func}>Submit</button>
-				  <div className="mui--clearfix"></div>
+
+				  <div className="mui--clearfix">
+					  <div className="warningBox mui--hidden-xs">
+					  	<span className='warning '> Please sign in to the left.</span>
+					  </div>
+					  <div className='warningBox mui--hidden-sm mui--hidden-md mui--hidden-lg'>
+					  	<span className='warning '> Please sign in to the below.</span>
+					  </div>
+				  </div>
 			</div>
 		);
 	}
@@ -292,9 +333,6 @@ var Data = React.createClass({
 		);
 	}
 }); 
-
-<h3>GraphWhy</h3> the public opinion database
-Share your opinion here; all data, except for contact informatino, is available to the public in order to educate and raise awerness.
 
 
 var DataSeries = React.createClass({
@@ -385,7 +423,7 @@ var SigninButton =  React.createClass({
 	render: function() {
 		return (
 			<div>
-			<li className='category signin' onClick={this.onClick} ><b>Signin</b></li>
+			<li className='category signin' onClick={this.onClick} ><b>Sign Up</b></li>
 			{ this.state.showSignin ? <Signup /> : null }
 			</div>
 		);
