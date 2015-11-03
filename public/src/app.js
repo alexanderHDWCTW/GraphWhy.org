@@ -54,7 +54,6 @@ var Drawer = React.createClass({
 				<br/>
 				<ul>
 					<SigninButton />
-
 					<li className='category questions'><b>Questions</b></li>
 					<ul className='sub'>
 						{questionTitles}
@@ -478,7 +477,7 @@ var Login = React.createClass({
 				<div className="signin-social">
 					<br/>
 					<div className='mui-col-xs-6'>
-					<span>Use:</span>
+					<span>coming:</span>
 					<img className="standard-img" src="client/img/signin-facebook.png" />
 					<img className="standard-img" src="client/img/signin-google.png" />
 					</div>
@@ -524,7 +523,7 @@ var Signup = React.createClass({
 				<div className="signin-social">
 					<br/>
 					<div className='mui-col-xs-6'>
-					<span>Use:</span>
+					<span>coming:</span>
 					<img className="standard-img" src="client/img/signin-facebook.png" />
 					<img className="standard-img" src="client/img/signin-google.png" />
 					</div>
@@ -643,19 +642,13 @@ var QUESTIONS = [
 		route:["FederalDebt", "/"],
 		category: "Question",
 		breadcrumb: "Federal Debt",
-		title		: "How much air time by mass media is bullshit",
+		title		: "Should we reduce military spending?",
 		options :	[
-								" 100%",
-								" 90%",
-								" 80%",
-								" 70%",
-								" 60%",
-								" 50%",
-								" 40%",
-								" 30%",
-								" 20%",
-								" 10%",
-								" 0%"
+								" A - Yes, absolutly!",
+								" B - Yes",
+								" C - Neutral",
+								" D - No",
+								" E - No, absolutly not!"
 							],
 		votes 	: [
 								"5",   //E
