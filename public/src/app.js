@@ -1,31 +1,56 @@
-var store = {
-	activeQuestion: 0,
-	okGotIt: 0
-};
+
 var App = React.createClass({
 	getInitialState: function() {
-		return store;
+		return {
+			activeQuestion: 0,
+			okGotIt: 0,
+			loggedIn: false
+		};
 	},
 	changeCenter: function(id) {
 		store.activeQuestion = id;
 		this.setState(store);
+	},
+	logout: function(){
+		var thiss = this;
+		$.post('/logout');	
+		var tempstate = this.state;
+		tempstate.loggedIn = false;
+		thiss.setState(tempstate)
+	},
+	login: function(){
+		var emailp = $('#login').val();
+		var passwordp = $('#passwordp').val();
+		var thiss = this;
+		$.post('/login', { email: emailp, password: passwordp }, function(data){
+			if(data!='no'){
+				var tempstate = thiss.state;
+				tempstate.loggedIn = true;
+				thiss.setState(tempstate)
+			}
+		});
 	},
 	render: function() {
 		return(
 		<div>
 			<Drawer changeCenter={this.changeCenter}
 						  questions={this.props.questions}
-						  activeQuestion={this.state.activeQuestion} />
+						  activeQuestion={this.state.activeQuestion} 
+						  loginfunc={this.login} 
+						  logoutfunc={this.logout} 
+						  loggedIn={this.state.loggedIn}/>
 			<Center activeQuestion={this.state.activeQuestion}
 						  questions={this.props.questions}
 						  okGotIt={this.state.okGotIt} 
-						  changeCenter={this.changeCenter} />					  
+						  changeCenter={this.changeCenter}
+						  loggedIn={this.state.loggedIn} />					  
 		</div>
 		);
 	}
 });
-var Drawer = React.createClass({
 
+
+var Drawer = React.createClass({
 	getInitialState: function() {
 		return {showLogin: false};
 	},
@@ -53,7 +78,7 @@ var Drawer = React.createClass({
 				<div className="mui-divider"></div>
 				<br/>
 				<ul>
-					<SigninButton />
+					<SigninButton loggedIn={this.props.loggedIn} logoutfunc={this.props.logoutfunc} loginfunc={this.props.loginfunc} />
 					<li className='category questions'><b>Questions</b></li>
 					<ul className='sub'>
 						{questionTitles}
@@ -73,7 +98,6 @@ var Footer = React.createClass({
 	},
 	render: function() {
 		var questionTitles = [];
-		console.log(this.props.questions);
 		for (var i=0; i < this.props.questions.length; i++) {
 			questionTitles.push(<QuestionLink changeCenter={this.props.changeCenter}
 																				questions={this.props.questions}
@@ -141,7 +165,6 @@ var QuestionLink = React.createClass({
 var Center = React.createClass({
 	// this.props.activeQuestion
 	render: function() {
-		console.log(this.props.questions);
 		return(
 			<div className="center mui-col-xs-12 mui-col-sm-9 mui-col-lg-10">
 				<Header activeQuestion={this.props.activeQuestion}
@@ -306,7 +329,6 @@ var Data = React.createClass({
 				x = i * 18;
 			}
 		}
-		console.log(data)
 		return(
 			<div className='box graph'>
 				<div className='labelTEMP'>
@@ -362,7 +384,6 @@ var DataSeries = React.createClass({
       .domain(d3.range(this.props.data.length))
       .rangeRoundBands([0, this.props.height], 0.05);
 
-     console.log(this.props.data);
 
     var bars = _.map(this.props.data, function(point, i) {
       return (
@@ -444,32 +465,55 @@ var SigninButton =  React.createClass({
 		this.setState({showSignup: false});
 	},
 	render: function() {
-		return (
-			<div>
-			<li className='category signin' onClick={this.openSignup} ><b>Sign Up</b></li>
-			{ this.state.showSignup ? <Signup /> : null }
-			<li className='category signin' onClick={this.openLogin} ><b>Login</b></li>
-			{ this.state.showLogin ? <Login /> : null }
-			</div>
-		);
+		if(this.props.loggedIn){
+			return (
+				<div>
+					<Logout logoutfunc={this.props.logoutfunc} /> 
+				</div>
+			);
+		}else{
+			return (
+				<div>
+				<li className='category signin' onClick={this.openSignup} ><b>Sign Up</b></li>
+				{ this.state.showSignup ? <Signup /> : null }
+				<li className='category signin' onClick={this.openLogin} ><b>Login</b></li>
+				{ this.state.showLogin ? <Login loginfunc={this.props.loginfunc} /> : null }
+				</div>
+			);
+		}
 	}
 });
+
+var Logout = React.createClass({
+	render: function() {
+		return(
+				<div className="signin-social">
+					<br/>
+					<div className='mui-col-xs-6'>
+						<button onClick={this.props.logoutfunc} className="mui-btn mui-btn--small mui-btn--primary mui--pull-right">Logout</button>
+					</div>
+					<br/>
+					<br/>
+					<br/>
+				</div>
+		)
+	}
+})
 
 var Login = React.createClass({
 	render: function() {
 		return(
 			<div className="">
-				<form name="login">
 					<ul className='signin'>
 						<li>
 							<div className="mui-textfield mui-textfield--float-label">
-								<input type="text" />
+								<input id="loginp" type="text" />
 								<label>Email</label>
 							</div>
 						</li>
 						<li>
 							<div className="mui-textfield mui-textfield--float-label">
-								<input type="password" />
+								<input id="passwordp" type="password" />
 								<label>Password</label>
 							</div>
 						</li>
@@ -482,20 +526,24 @@ var Login = React.createClass({
 					<img className="standard-img" src="client/img/signin-google.png" />
 					</div>
 					<div className='mui-col-xs-6'>
-						<button className="mui-btn mui-btn--small mui-btn--primary mui--pull-right">Submit</button>
+						<button onClick={this.props.loginfunc} className="mui-btn mui-btn--small mui-btn--primary mui--pull-right">Submit</button>
 					</div>
 					<br/>
 					<br/>
 					<br/>
 				</div>
 				<br/>
-				</form>
 			</div>
 		);
 	} 
 });
 
 var Signup = React.createClass({
+	submit: function(){
+		var emaili = $('#email').val();
+		var passwordi = $('#password').val();
+		$.post('/users', { email: emaili, password: passwordi });
+	},
 	render: function() {
 		return(
 			<div className="">
@@ -503,13 +551,13 @@ var Signup = React.createClass({
 					<ul className='signin'>
 						<li>
 							<div className="mui-textfield mui-textfield--float-label">
-								<input type="text" />
+								<input id="email" type="text" />
 								<label>Email</label>
 							</div>
 						</li>
 						<li>
 							<div className="mui-textfield mui-textfield--float-label">
-								<input type="password" />
+								<input id="password" type="password" />
 								<label>Password</label>
 							</div>
 						</li>
@@ -528,7 +576,7 @@ var Signup = React.createClass({
 					<img className="standard-img" src="client/img/signin-google.png" />
 					</div>
 					<div className='mui-col-xs-6'>
-						<button className="mui-btn mui-btn--small mui-btn--primary mui--pull-right">Submit</button>
+						<button onClick={this.submit} className="mui-btn mui-btn--small mui-btn--primary mui--pull-right">Submit</button>
 					</div>
 					<br/>
 					<br/>

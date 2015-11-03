@@ -5,9 +5,23 @@ var fs = require('fs'),
 		app = express(),
 		mongoose = require('mongoose'),
 		votes = require('./models/votes.js'),
-		config = require('./config.js');
+		config = require('./config.js'),
+		User = require('./models/user.js'),
+		bodyParser = require('body-parser'),
+		session = require('client-sessions');
 
 app.set('port', (process.env.PORT || 3000));
+
+
+// parse application/x-www-form-urlencoded
+app.use(bodyParser.urlencoded({ extended: false }))
+
+app.use(session({
+  cookieName: 'session',
+  secret: 'flklf;k43f;l43k21s12j112e21',
+  duration: 30*60*1000,
+  activeDuration: 5 * 60 * 1000,
+}));
 
 mongoose.connect("mongodb://"+config.database+":27017/", function (err, res) {
   if (err) {
@@ -18,7 +32,53 @@ mongoose.connect("mongodb://"+config.database+":27017/", function (err, res) {
 
 app.use('/', express.static(path.join(__dirname,'public')));
 
+app.use(function(req,res,next){
+  if(req.session && req.session.user){
+    User.model.findOne({ _id: req.session.user._id }, function(err,user){
+      if(user){
+        req.user = user;
+        delete req.user.password;
+        req.session.user = user;
+        res.locals.user = user;
+      }
+      next();
+    });
+  }else{
+    next();
+  }
+});
 
+app.get('/getlogged', function(req, res, next){
+  if(!req.user){
+    return  res.send("no");
+  }
+  return res.send(req.user);
+});
+
+app.post('/login', function(req,res,next){
+  User.model.findOne({email:req.body.email}, function(err, user){
+    if(err){
+    	return res.send('no')
+    }else{
+      if(!user){
+      	return res.send('no');
+      }else{
+        var p = require('crypto').createHash('md5').update(req.body.password).digest('hex');
+        if(p==user.password){
+          req.session.user = user;
+        }else{
+          return res.send('no');
+        }
+      }
+    } 
+    return res.send(req.session.user);
+  });
+});
+
+app.get('/logout', function(req,res){
+  req.session.reset();
+  res.send('oh');
+});
 
 app.get('/createvoter/:id', function(req, res, next){
   var temp = new votes.model({ 
@@ -87,27 +147,19 @@ app.get('/delete/:id', function(req,res,next){
   });
 });
 
-
-
-
-//creates a user 
-//urlparams: POST:/api/v0.1/users/
-//post: 'phone', 'password'
-function createUser(req, res){
-	//TODO: check if valid input
+app.post('/users', function(req, res, next){
 	var encryptedPasswordInput = require('crypto').createHash('md5').update(req.body.password).digest('hex');
 	var tempUser = new User.model({
-		phone: req.body.phone,
+		email: req.body.email,
 		password: encryptedPasswordInput
 	});
 	tempUser.save(function(err, data){
 		if(err) res.send({status:400, data:null, message:err});
 		else res.send({status:200, data:null, message:tempUser+" Saved"});
 	}); 
-}
-//prints out all users
-//urlparams: GET:/api/v0.1/users/
-function readUsers(req, res){
+})
+
+app.get('/users', function(req,res,next){
 	User.model.find({},function(err, users){
 		var userMap = {};
 		users.forEach(function(user){
@@ -116,15 +168,19 @@ function readUsers(req, res){
 		if(err) res.send({status:400, data:null, message:err});
 		else res.send({status:200, data:userMap, message:"Fetching Users"});
 	});
-}
-//reads a single user with phone param
-//urlparams: GET:/api/v0.1/users/PHONENUMBER
-function readUser(req, res){
+});
+
+app.get('/users', function(req,res,next){
 	User.model.find({phone:req.params.phone}, function(err, user){
 		if(err) res.send({status:400, data:null, message:err});
 		else res.send({status:200, data:user, message:user.phone+" Fetched"})
 	});
-}
+});
+
+app.delete('/users', function(req, res, next){
+	User.model.remove().exec();
+	res.send({status:200, data:null, message:"Deleted "+User});
+})
 
 //deletes a user
 //urlparams: DELETE:/api/v0.1/users/PHONENUMBER
@@ -136,17 +192,8 @@ function deleteUser(req, res){
 }
 //deletes all users
 //urlparams: DELETE:/api/v0.1/users/
-function deleteUsers(req, res){
-	User.model.remove().exec();
-	res.send({status:200, data:null, message:"Deleted "+User});
-}
 
 //crud user
-app.post('/users', createUser);
-app.get('/users', readUsers);
-app.delete('/users', deleteUsers);
-
-
 
 app.listen(app.get('port'),function(){
 	console.log('server started: http://localhost:' + app.get('port') + '/');

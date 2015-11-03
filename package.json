@@ -11,7 +11,9 @@
     "react": "^0.14.0",
     "react-dom": "^0.14.0",
     "mongodb": "*",
-    "mongoose": "*"
+    "mongoose": "*",
+    "crypto": "*",
+    "client-sessions": "*"
   },
   "devDependencies": {
     "babelify": "^6.4.0",
