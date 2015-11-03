@@ -54,7 +54,6 @@ var Drawer = React.createClass({
 				<br/>
 				<ul>
 					<SigninButton />
-					<LoginButton />
 
 					<li className='category questions'><b>Questions</b></li>
 					<ul className='sub'>
@@ -95,7 +94,6 @@ var Footer = React.createClass({
 				<div className="mui-divider"></div>
 				<ul>
 					<SigninButton />
-					<LoginButton />
 					<li className='category questions'><b>Questions</b></li>
 					<ul className='sub'>
 						{questionTitles}
@@ -453,21 +451,6 @@ var SigninButton =  React.createClass({
 			{ this.state.showSignup ? <Signup /> : null }
 			<li className='category signin' onClick={this.openLogin} ><b>Login</b></li>
 			{ this.state.showLogin ? <Login /> : null }
-			</div>
-		);
-	}
-});
-var LoginButton =  React.createClass({
-	getInitialState: function() {
-		return { showLogin: false};
-	},
-	onClick: function() {
-		this.setState({showLogin: !this.state.showLogin});
-	},
-	render: function() {
-		return (
-			<div>
-
 			</div>
 		);
 	}
