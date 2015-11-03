@@ -150,7 +150,9 @@ h1{
 	background-color: #eee;
 	text-decoration: none;
 }
-
+.drawer .highlight{
+	color:#FF6F00 !important;
+}
 .center{
 	float: right !important;
 	width:100%;
@@ -184,7 +186,7 @@ h1{
 	margin-top: 60px;
 	position: relative;
 	width: 100%;
-	height: 149px;
+	height: 149.8px;
 	background-color:#90A4AE;
 	color:#fff;
 }
@@ -206,7 +208,7 @@ h1{
 	background-color: #FFB300;
 	color: #fff;
 	height: 113px;
-	margin: 19px 24px;
+	margin: 18px 24px;
 	text-align: center;
 	padding-top:38px;
 	width: 113px;

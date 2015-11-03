@@ -36,6 +36,8 @@ var Drawer = React.createClass({
 		var questionTitles = [];
 		for (var i=0; i < this.props.questions.length; i++) {
 			questionTitles.push(<QuestionLink changeCenter={this.props.changeCenter}
+																				questions={this.props.questions}
+																				activeQuestion={this.props.activeQuestion}
 													  						id={this.props.questions[i].id}
 													  						title={this.props.questions[i].title} />); 
 		}
@@ -73,8 +75,11 @@ var Footer = React.createClass({
 	},
 	render: function() {
 		var questionTitles = [];
+		console.log(this.props.questions);
 		for (var i=0; i < this.props.questions.length; i++) {
 			questionTitles.push(<QuestionLink changeCenter={this.props.changeCenter}
+																				questions={this.props.questions}
+																				activeQuestion={this.props.activeQuestion}
 													  						id={this.props.questions[i].id}
 													  						title={this.props.questions[i].title} />); 
 		}
@@ -88,7 +93,6 @@ var Footer = React.createClass({
 					</h3>
 				</header>
 				<div className="mui-divider"></div>
-				<br/>
 				<ul>
 					<SigninButton />
 					<LoginButton />
@@ -109,25 +113,34 @@ var QuestionLink = React.createClass({
 		}
 	},
 	render: function() {
-		if (this.props.title == "About Us") {
-		return (
-			<a href='#'><li className="fakeRoot" onClick={ this.handleClick(this.props.id) }>{this.props.title}</li></a>
-		);
+		
+		//var title = this.props.title;
+		var activeQuestion = this.props.activeQuestion;
+		var check = this.props.questions[activeQuestion].title;
+		if (this.props.title == check) {
+			if (this.props.title == "About Us") {
+				return (
+					<a  className='highlight' href='#'><li className="fakeRoot highlight" onClick={ this.handleClick(this.props.id) }>{this.props.title}</li></a>
+				);
+			} else {
+				return(
+					<li onClick={ this.handleClick(this.props.id) }><a  className='highlight' href='#'>{this.props.title}</a></li>
+				);
+			}
 		} else {
-		return(
-			<li onClick={ this.handleClick(this.props.id) }><a href='#'>{this.props.title}</a></li>
-		);
+			if (this.props.title == "About Us") {
+				return (
+					<a href='#'><li className="fakeRoot" onClick={ this.handleClick(this.props.id) }>{this.props.title}</li></a>
+				);
+			} else {
+				return(
+					<li onClick={ this.handleClick(this.props.id) }><a href='#'>{this.props.title}</a></li>
+				);
+			}
 		}
-	}	
+	  }
 });
-var ProfileLink = React.createClass({
-	render: function() {
-		return(
-			<li>{this.props.title}</li>
 
-		);
-	}
-});
 var Center = React.createClass({
 	// this.props.activeQuestion
 	render: function() {
@@ -142,7 +155,8 @@ var Center = React.createClass({
 							questions={this.props.questions} 
 							visitor={this.props.visitor} />
 				<Footer changeCenter={this.props.changeCenter}
-						  questions={this.props.questions}/>	
+						  questions={this.props.questions}
+						  activeQuestion={this.props.activeQuestion}/>	
 			</div>
 		);
 	}
@@ -391,14 +405,19 @@ var Comments = React.createClass({
 	render: function(){
 		var activeQuestion = this.props.activeQuestion;
 		if (this.props.questions[activeQuestion].title == "About Us") {
-		return (
-			<AboutUs />
-		);
+			return (
+				<AboutUs />
+			);
+		} else if (this.props.questions[activeQuestion].comments[0].title == "") {
+			return (
+				<div><br/><br/>
+				</div>
+			);
 		} else {
 		return(
 			<div className="box">
 				<div>
-					<h4 className="mui--pull-left"><b>5</b>&nbsp;- {this.props.questions[activeQuestion].comments[0].name}</h4>
+					<h4 className="mui--pull-left"><b>{this.props.questions[activeQuestion].comments[0].vote}</b>&nbsp;- {this.props.questions[activeQuestion].comments[0].name}</h4>
 					<h4 className="mui--pull-right">{this.props.questions[activeQuestion].comments[0].date}</h4>
 					<div className="mui--clearfix"></div>
 				</div>
@@ -415,16 +434,25 @@ var Comments = React.createClass({
 
 var SigninButton =  React.createClass({
 	getInitialState: function() {
-		return { showSignin: false};
+		return { showSignup: false,
+						 showLogin: false 
+						};
 	},
-	onClick: function() {
-		this.setState({showSignin: !this.state.showSignin});
+	openSignup: function() {
+		this.setState({showSignup: !this.state.showSignup});
+		this.setState({showLogin: false});
+	},
+	openLogin: function() {
+		this.setState({showLogin: !this.state.showLogin});
+		this.setState({showSignup: false});
 	},
 	render: function() {
 		return (
 			<div>
-			<li className='category signin' onClick={this.onClick} ><b>Sign Up</b></li>
-			{ this.state.showSignin ? <Signup /> : null }
+			<li className='category signin' onClick={this.openSignup} ><b>Sign Up</b></li>
+			{ this.state.showSignup ? <Signup /> : null }
+			<li className='category signin' onClick={this.openLogin} ><b>Login</b></li>
+			{ this.state.showLogin ? <Login /> : null }
 			</div>
 		);
 	}
@@ -439,8 +467,7 @@ var LoginButton =  React.createClass({
 	render: function() {
 		return (
 			<div>
-			<li className='category signin' onClick={this.onClick} ><b>Login</b></li>
-			{ this.state.showLogin ? <Login /> : null }
+
 			</div>
 		);
 	}
@@ -590,15 +617,15 @@ var QUESTIONS = [
 								"6",   //D
 								"9",   //C
 								"10",  //B
-								"1"    //A
+								"1"    //An
 							],
 		comments: [	
 								{
-									vote:"A",
-									name:"John Cena",
-									title:"Challenger: District 12, SF",
-									date:"10/24/2015",
-									comment:"Lorem ipsum dolor sit amet, in quando saperet rationibus usu, ex duo mundi evertitur. Et sea quas erroribus. Idque latine lucilius at vim, per numquam aliquando et. Nemore utamur an vim. Legendos gloriatur qui ei, cu verear urbanitas vix. Nostro iisque nominavi ut mea. An sint viris fastidii vis, appareat inimicus volutpat ea ius. Eam ei erant docendi vivendum. Feugiat accusamus interpretaris ei mei, ea dico qualisque intellegebat qui. An quo lorem fugit, assum laudem vidisse nam eu. Mel quas mandamus efficiantur ne, cu cum sumo nulla tempor, ea duo partem volutpat gubergren. Per nibh vidit percipitur eu. Eam tempor blandit delicatissimi an. Te vidit rebum pro, his altera causae cu, sea ea novum mundi epicurei. In pri erant convenire, everti abhorreant his in, qui at augue ridens similique. Altera mnesarchum has cu, cum ad paulo bonorum. Ut vix discere omnesque. Cu eos nulla erant audire, ut affert graeco nominati nec. Quo et legere nostro inciderint, in appetere principes vel, ut mel quem vivendum instructior. Vulputate argumentum ne qui, eum nobis eleifend an, ex sale solum sit. Soluta nominavi contentiones et mei, iriure consetetur eu sit, delenit molestie vel eu. Nostrud insolens in mea, nobis minimum officiis eum ne. Mel at everti debitis incorrupte, an has quot malis error, eos et tale adhuc voluptatibus. An appetere corrumpit scribentur nam. Et nam petentium interesset, ius ex error paulo putant. Nam autem equidem disputationi et, sed id persius debitis tibique, mei ex adipisci electram. Vix in tota harum laudem, vim no omnium civibus. Ea mea novum suavitate, nec odio similique et."
+									vote:"",
+									name:"",
+									title:"",
+									date:"",
+									comment:""
 								}
 							],
 		active: true
@@ -619,11 +646,11 @@ var QUESTIONS = [
 							],
 		comments: [	
 								{
-									vote:"A",
-									name:"Seth Green",
-									title:"Actor",
-									date:"10/24/2015",
-									comment:"Lorem ipsum dolor sit amet, in quando saperet rationibus usu, ex duo mundi evertitur. Et sea quas erroribus. Idque latine lucilius at vim, per numquam aliquando et. Nemore utamur an vim. Legendos gloriatur qui ei, cu verear urbanitas vix. Nostro iisque nominavi ut mea. An sint viris fastidii vis, appareat inimicus volutpat ea ius. Eam ei erant docendi vivendum. Feugiat accusamus interpretaris ei mei, ea dico qualisque intellegebat qui. An quo lorem fugit, assum laudem vidisse nam eu. Mel quas mandamus efficiantur ne, cu cum sumo nulla tempor, ea duo partem volutpat gubergren. Per nibh vidit percipitur eu. Eam tempor blandit delicatissimi an. Te vidit rebum pro, his altera causae cu, sea ea novum mundi epicurei. In pri erant convenire, everti abhorreant his in, qui at augue ridens similique. Altera mnesarchum has cu, cum ad paulo bonorum. Ut vix discere omnesque. Cu eos nulla erant audire, ut affert graeco nominati nec. Quo et legere nostro inciderint, in appetere principes vel, ut mel quem vivendum instructior. Vulputate argumentum ne qui, eum nobis eleifend an, ex sale solum sit. Soluta nominavi contentiones et mei, iriure consetetur eu sit, delenit molestie vel eu. Nostrud insolens in mea, nobis minimum officiis eum ne. Mel at everti debitis incorrupte, an has quot malis error, eos et tale adhuc voluptatibus. An appetere corrumpit scribentur nam. Et nam petentium interesset, ius ex error paulo putant. Nam autem equidem disputationi et, sed id persius debitis tibique, mei ex adipisci electram. Vix in tota harum laudem, vim no omnium civibus. Ea mea novum suavitate, nec odio similique et."
+									vote:"",
+									name:"",
+									title:"",
+									date:"",
+									comment:""
 								}
 							],
 		active: true
@@ -653,11 +680,11 @@ var QUESTIONS = [
 							],
 		comments: [	
 								{
-									vote:"A",
-									name:"Seth Green",
-									title:"Actor",
-									date:"10/24/2015",
-									comment:"Lorem ipsum dolor sit amet, in quando saperet rationibus usu, ex duo mundi evertitur. Et sea quas erroribus. Idque latine lucilius at vim, per numquam aliquando et. Nemore utamur an vim. Legendos gloriatur qui ei, cu verear urbanitas vix. Nostro iisque nominavi ut mea. An sint viris fastidii vis, appareat inimicus volutpat ea ius. Eam ei erant docendi vivendum. Feugiat accusamus interpretaris ei mei, ea dico qualisque intellegebat qui. An quo lorem fugit, assum laudem vidisse nam eu. Mel quas mandamus efficiantur ne, cu cum sumo nulla tempor, ea duo partem volutpat gubergren. Per nibh vidit percipitur eu. Eam tempor blandit delicatissimi an. Te vidit rebum pro, his altera causae cu, sea ea novum mundi epicurei. In pri erant convenire, everti abhorreant his in, qui at augue ridens similique. Altera mnesarchum has cu, cum ad paulo bonorum. Ut vix discere omnesque. Cu eos nulla erant audire, ut affert graeco nominati nec. Quo et legere nostro inciderint, in appetere principes vel, ut mel quem vivendum instructior. Vulputate argumentum ne qui, eum nobis eleifend an, ex sale solum sit. Soluta nominavi contentiones et mei, iriure consetetur eu sit, delenit molestie vel eu. Nostrud insolens in mea, nobis minimum officiis eum ne. Mel at everti debitis incorrupte, an has quot malis error, eos et tale adhuc voluptatibus. An appetere corrumpit scribentur nam. Et nam petentium interesset, ius ex error paulo putant. Nam autem equidem disputationi et, sed id persius debitis tibique, mei ex adipisci electram. Vix in tota harum laudem, vim no omnium civibus. Ea mea novum suavitate, nec odio similique et."
+									vote:"",
+									name:"",
+									title:"",
+									date:"",
+									comment:""
 								}
 							],
 		active: true
@@ -684,11 +711,11 @@ var QUESTIONS = [
 							],
 		comments: [	
 								{
-									vote:"C",
-									name:"Preston Picus",
-									title:"Challenger: District 12, SF",
-									date:"10/24/2015",
-									comment:"Et sea quas erroribus. Nemore utamur an vim. Legendos gloriatur qui ei, cu verear urbanitas vix. An sint viris fastidii vis, appareat inimicus volutpat ea ius. Eam ei erant docendi vivendum. Feugiat accusamus interpretaris ei mei, ea dico qualisque intellegebat qui. An quo lorem fugit, assum laudem vidisse nam eu. Mel quas mandamus efficiantur ne, cu cum sumo nulla tempor, ea duo partem volutpat gubergren. Per nibh vidit percipitur eu. Eam tempor blandit delicatissimi an. Te vidit rebum pro, his altera causae cu, sea ea novum mundi epicurei. In pri erant convenire, everti abhorreant his in, qui at augue ridens similique. Altera mnesarchum has cu, cum ad paulo bonorum. Ut vix discere omnesque. Cu eos nulla erant audire, ut affert graeco nominati nec. Quo et legere nostro inciderint, in appetere principes vel, ut mel quem vivendum instructior. Vulputate argumentum ne qui, eum nobis eleifend an, ex sale solum sit. Soluta nominavi contentiones et mei, iriure consetetur eu sit, delenit molestie vel eu. Nostrud insolens in mea, nobis minimum officiis eum ne. Mel at everti debitis incorrupte, an has quot malis error, eos et tale adhuc voluptatibus. An appetere corrumpit scribentur nam. Et nam petentium interesset, ius ex error paulo putant. Nam autem equidem disputationi et, sed id persius debitis tibique, mei ex adipisci electram. Vix in tota harum laudem, vim no omnium civibus. Ea mea novum suavitate, nec odio similique et."
+									vote:"",
+									name:"",
+									title:"",
+									date:"",
+									comment:""
 								}
 							],
 		active: false
@@ -703,41 +730,9 @@ var QUESTIONS = [
 	votes: [],
 	comments: 			"<div className='mui-col-xs-12 mui-col-sm-10 mui-col-sm-offset-1 aboutUs'><br/><br/><h1> About Us </h1><h4>Where am I?</h4><div className='box'><p>Welcome to GraphWhy.org. Our objective is to educate the American public on important social issues.</p></div><br/><h4> The Problem </h4><div className='box'><p>We believe, that most political conversations are filled with sh*t.</p><p>We believe, that American media fills the mind of the public with cr*p.</p><p>We believe, that the US working class if getting f*cked.</p></div><br/><h4> The Solution </h4><div className='box'><p>Share your opinions with everyone </p><p>Understand the opinions of others </p><p>Scrutinize the authorities in that space</p></div><br/><h4> How </h4><div className='box'><p>Share your opinions with everyone </p><p>Understand the opinions of others </p><p>Scrutinize the authorities in that space</p></div><br/><h4> Support </h4><div className='box'><p>GraphWhy.org currently does not allow anyone to ask questions, and does not allow anyone to leave comments. If you would like to contribute more than a vote please email Alexander.McNulty92@gmail.com</p></div></div>"}
 ];
-var INFO = [ {
-	id: 0,
-	route: "AboutUs",
-	category: "Info",
-	breadcrumb: "About Us",
-	body: 			"<div className='mui-col-xs-12 mui-col-sm-10 mui-col-sm-offset-1 aboutUs'><br/><br/><h1> About Us </h1><h4>Where am I?</h4><div className='box'><p>Welcome to GraphWhy.org. Our objective is to educate the American public on important social issues.</p></div><br/><h4> The Problem </h4><div className='box'><p>We believe, that most political conversations are filled with sh*t.</p><p>We believe, that American media fills the mind of the public with cr*p.</p><p>We believe, that the US working class if getting f*cked.</p></div><br/><h4> The Solution </h4><div className='box'><p>Share your opinions with everyone </p><p>Understand the opinions of others </p><p>Scrutinize the authorities in that space</p></div><br/><h4> How </h4><div className='box'><p>Share your opinions with everyone </p><p>Understand the opinions of others </p><p>Scrutinize the authorities in that space</p></div><br/><h4> Support </h4><div className='box'><p>GraphWhy.org currently does not allow anyone to ask questions, and does not allow anyone to leave comments. If you would like to contribute more than a vote please email Alexander.McNulty92@gmail.com</p></div></div>"
-}
-];
-var VISITOR = [
-	{
-		category: "Profile",
-		breadcrumb: "Login",
-		title: "Login",
-		forms: [
-						'Username / Email',
-						'Password'
-						],
-		active: false
-	},
-	{
-		category: "Profile",
-		breadcrumb: "Sign Up",
-		title: "Sign In",
-		forms: [
-						'Email',
-						'Username',
-						'Password',
-						'Confirm Password'
-						],
-		active: false
-	}
-];
 
 
 ReactDOM.render(
-	<App questions={QUESTIONS} visitor={VISITOR} />,
+	<App questions={QUESTIONS} />,
 	document.getElementById('app')
 );
