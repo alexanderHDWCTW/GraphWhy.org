@@ -1,11 +1,11 @@
-
+var store = {		
+	activeQuestion: 0,		
+	okGotIt: 0, 
+	loggedIn: false
+};
 var App = React.createClass({
 	getInitialState: function() {
-		return {
-			activeQuestion: 0,
-			okGotIt: 0,
-			loggedIn: false
-		};
+		return store.app;
 	},
 	changeCenter: function(id) {
 		store.activeQuestion = id;
