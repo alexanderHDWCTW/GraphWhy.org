@@ -524,7 +524,7 @@ var Logout = React.createClass({
 					<br/>
 						<button onClick={this.props.logoutfunc} className="mui-btn mui-btn--small mui-btn--primary">Logout</button>
 					<br/>
-					<br/>
+					<br/>Keep your chin up.
 					<br/>
 				</div>
 		)
@@ -629,15 +629,23 @@ var AboutUs = React.createClass ({
 				<br/>
 				<div className='box'>
 				<br/>
-					<p>It has been said, 'Your most valueable possession you have is your opinion', so please share it. This project exists to treat your opinion with the respect it deservers.
-					Let yourself be heard, for this generation and the next generations. We will never sell information gather here.</p>
-					<p>We are not hear to bottle you up and sell you to the highest bidder. No one is going to get rich working on this site. This site is a labor of love, and a gift to anyone who seek the perspective of others.</p>
-					<p>If you want to contribute please do. Email us with suggestions. Contribute questions you think are important. Share this site with a friend or loved one. As we gather feedback on our kernal new features will be added</p>
+					<p>It has been said, 'Your opinion is most valueable possession you have', we believe that is true. This project exists to treat your opinion with the respect it deservers.
+					Let yourself be heard, for the benefit of this generation and next generations. We will never sell information gathered here.</p>
+					<p>We are not hear to bottle you up and sell you to the highest bidder. No one is going to get rich working on this site. This site is a labor of love, and a gift to anyone who seeks the perspective of others.</p>
+					<p>If you want to contribute please do. Email us with suggestions. Contribute questions you think are important. Share this site with a friend or loved one. As we gather feedback new features will be continue to be added.</p>
 					<br/>
 					<p className='mui--pull-right'>Best Regards,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p><br/><br/>
 					<p className='mui--pull-right'>Alexander McNulty,<br/> Thomas Shepard,<br/>Christopher Banh</p>
 					<br/><br/>
-					<br/><br/>
+					<br/>
+				</div>
+				<br/>
+				<h4>Contact Information</h4>
+				<div className='box'>
+				<br/>
+					<p>Alexander.McNulty92@gmail.com</p>
+					<p>(408)348-9804</p>
+					<p>16388 Los Gatos Almaden Rd. 95032, Los Gatos, California</p>
 				</div>
 			</div>
 		);
@@ -647,37 +655,6 @@ var AboutUs = React.createClass ({
 var QUESTIONS = [
 	{
 		id: 0,
-		route:["Happiness", "/"],
-		category: "Question",
-		breadcrumb: "Happiness",
-		title		: "Are you happy?",
-		options :	[
-								" A - Absolutly, yes",
-								" B - Yes",
-								" C - I am not sure",
-								" D - No",
-								" E - Absolutly not"
-							],
-		votes 	: [
-								"5",   //E
-								"6",   //D
-								"9",   //C
-								"10",  //B
-								"1"    //An
-							],
-		comments: [	
-								{
-									vote:"",
-									name:"",
-									title:"",
-									date:"",
-									comment:""
-								}
-							],
-		active: true
-	},
-	{
-		id: 1,
 		route:["FederalDebt", "/"],
 		category: "Question",
 		breadcrumb: "Federal Debt",
@@ -708,39 +685,11 @@ var QUESTIONS = [
 		active: true
 	},
 	{
-		id: 2,
+		id: 1,
 		route:["FederalDebt", "/"],
 		category: "Question",
 		breadcrumb: "Federal Debt",
-		title		: "Is the world becoming a better place?",
-		options :	[
-								" A - Yes absolutly",
-								" B - Mostly yes",
-								" C - Neutral",
-								" D - Mostly no",
-								" E - Absolutly not"
-							],
-		votes 	: [
-								"5",   //E
-								"6"   //D
-							],
-		comments: [	
-								{
-									vote:"",
-									name:"",
-									title:"",
-									date:"",
-									comment:""
-								}
-							],
-		active: true
-	},
-	{
-		id: 3,
-		route:["FederalDebt", "/"],
-		category: "Question",
-		breadcrumb: "Federal Debt",
-		title		: "Should USA reduce military spending?",
+		title		: "Should the USA reduce military spending?",
 		options :	[
 								" A - Yes, absolutly!",
 								" B - Yes",
@@ -764,11 +713,11 @@ var QUESTIONS = [
 		active: true
 	},
 	{
-		id: 4,
+		id: 2,
 		route:"DrugLaw",
 		category: "Question",
 		breadcrumb: "Drug Law",
-		title		: "Should USA legalize all drugs?",
+		title		: "Should the USA legalize all drugs?",
 		options :	[
 								" A - Yes",
 								" B - Somewhat yes",
@@ -795,11 +744,70 @@ var QUESTIONS = [
 		active: false
 	},
 	{
+		id: 3,
+		route:["BetterWorld", "/"],
+		category: "Question",
+		breadcrumb: "Better World",
+		title		: "Is the world becoming a better place?",
+		options :	[
+								" A - Yes absolutly",
+								" B - Mostly yes",
+								" C - Neutral",
+								" D - Mostly no",
+								" E - Absolutly not"
+							],
+		votes 	: [
+								"5",   //E
+								"6"   //D
+							],
+		comments: [	
+								{
+									vote:"",
+									name:"",
+									title:"",
+									date:"",
+									comment:""
+								}
+							],
+		active: true
+	},
+		{
+		id: 4,
+		route:["Happiness", "/"],
+		category: "Question",
+		breadcrumb: "Happiness",
+		title		: "Are you happy?",
+		options :	[
+								" A - Absolutly, yes",
+								" B - Yes",
+								" C - I am not sure",
+								" D - No",
+								" E - Absolutly not"
+							],
+		votes 	: [
+								"5",   //E
+								"6",   //D
+								"9",   //C
+								"10",  //B
+								"1"    //An
+							],
+		comments: [	
+								{
+									vote:"",
+									name:"",
+									title:"",
+									date:"",
+									comment:""
+								}
+							],
+		active: true
+	},
+	{
 		id: 5,
 		route:["WorkEthic", "/"],
 		category: "Question",
 		breadcrumb: "Happiness",
-		title		: "How Hard do you work?",
+		title		: "How hard do you work?",
 		options :	[
 								" A - I push my limits everyday.",
 								" B - I work hard.",
@@ -827,9 +835,9 @@ var QUESTIONS = [
 	},
 	{
 		id: 6,
-		route:["WorkEthic", "/"],
+		route:["Veganism", "/"],
 		category: "Question",
-		breadcrumb: "Happiness",
+		breadcrumb: "Veganism",
 		title		: "Do you support Veganism?",
 		options :	[
 								" A - I strongly support Veganism",

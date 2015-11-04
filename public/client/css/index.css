@@ -243,6 +243,9 @@ h1{
 .main .aboutUs .box {
 	margin-top: 0;
 }
+.main .aboutUs .box p.mui--pull-right{
+	padding-right: 10px;
+}
 .main .aboutUs h1{
 	margin-bottom: 33px;
 }
