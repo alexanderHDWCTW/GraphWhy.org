@@ -76,6 +76,7 @@ app.post('/login', function(req,res,next){
 });
 
 app.get('/logout', function(req,res){
+console.log('logged out')
   req.session.reset();
   res.send('oh');
 });
