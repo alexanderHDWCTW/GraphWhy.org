@@ -19,7 +19,7 @@ var App = React.createClass({
 		thiss.setState(tempstate)
 	},
 	login: function(){
-		var emailp = $('#login').val();
+		var emailp = $('#loginp').val();
 		var passwordp = $('#passwordp').val();
 		var thiss = this;
 		$.post('/login', { email: emailp, password: passwordp }, function(data){
@@ -631,6 +631,37 @@ var AboutUs = React.createClass ({
 var QUESTIONS = [
 	{
 		id: 0,
+		route:["Happiness", "/"],
+		category: "Question",
+		breadcrumb: "Happiness",
+		title		: "Are you happy?",
+		options :	[
+								" A - Absolutly, yes",
+								" B - Yes",
+								" C - I am not sure",
+								" D - No",
+								" E - Absolutly not"
+							],
+		votes 	: [
+								"5",   //E
+								"6",   //D
+								"9",   //C
+								"10",  //B
+								"1"    //An
+							],
+		comments: [	
+								{
+									vote:"",
+									name:"",
+									title:"",
+									date:"",
+									comment:""
+								}
+							],
+		active: true
+	},
+	{
+		id: 1,
 		route:["FederalDebt", "/"],
 		category: "Question",
 		breadcrumb: "Federal Debt",
@@ -661,7 +692,7 @@ var QUESTIONS = [
 		active: true
 	},
 	{
-		id: 1,
+		id: 2,
 		route:["FederalDebt", "/"],
 		category: "Question",
 		breadcrumb: "Federal Debt",
@@ -686,7 +717,7 @@ var QUESTIONS = [
 		active: true
 	},
 	{
-		id: 2,
+		id: 3,
 		route:["FederalDebt", "/"],
 		category: "Question",
 		breadcrumb: "Federal Debt",
@@ -714,7 +745,7 @@ var QUESTIONS = [
 		active: true
 	},
 	{
-		id: 3,
+		id: 4,
 		route:"DrugLaw",
 		category: "Question",
 		breadcrumb: "Drug Law",
@@ -745,7 +776,7 @@ var QUESTIONS = [
 		active: false
 	},
 	{
-	id: 4 ,
+	id: 5,
 	route:"AboutUs",
 	category: "Info",
 	breadcrumb: "About Us",
