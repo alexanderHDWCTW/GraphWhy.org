@@ -41,17 +41,17 @@ var App = React.createClass({
 	render: function() {
 		return(
 		<div>
-			<Drawer changeCenter={this.changeCenter}
+		<Center activeQuestion={this.state.activeQuestion}
+						  questions={this.props.questions}
+						  okGotIt={this.state.okGotIt} 
+						  changeCenter={this.changeCenter}
+						  loggedIn={this.state.loggedIn} />
+		<Drawer changeCenter={this.changeCenter}
 						  questions={this.props.questions}
 						  activeQuestion={this.state.activeQuestion} 
 						  loginfunc={this.login} 
 						  logoutfunc={this.logout} 
 						  loggedIn={this.state.loggedIn}/>
-			<Center activeQuestion={this.state.activeQuestion}
-						  questions={this.props.questions}
-						  okGotIt={this.state.okGotIt} 
-						  changeCenter={this.changeCenter}
-						  loggedIn={this.state.loggedIn} />					  
 		</div>
 		);
 	}
@@ -79,7 +79,7 @@ var Drawer = React.createClass({
 													  						title={this.props.questions[i].title} />); 
 		}
 		return(
-			<div className="fixed drawer mui--hidden-xs mui-col-sm-3 mui-col-lg-2">
+			<div className="fixed drawer mui-col-xs-12 mui-col-sm-3 mui-col-lg-2">
 				<header>
 					<h3>
 						<a href="#">
@@ -187,9 +187,6 @@ var Center = React.createClass({
 							questions={this.props.questions} 
 							visitor={this.props.visitor} 
 							loggedIn={this.props.loggedIn} />
-				<Footer changeCenter={this.props.changeCenter}
-						  questions={this.props.questions}
-						  activeQuestion={this.props.activeQuestion}/>	
 			</div>
 		);
 	}
@@ -246,7 +243,6 @@ var Main = React.createClass({
 		);
 	}
 });
-
 var Question = React.createClass({
 	getInitialState: function() {
       return {
@@ -338,7 +334,7 @@ var RadioOption = React.createClass({
 	}
 });
 var dataStore = {
-	polling: [0,0,0,0,0]
+	polling: [0,0,0,0,0,0,0]
 }
 var Data = React.createClass({
 	getInitialState: function(){
@@ -378,6 +374,8 @@ var Data = React.createClass({
 					<span>C</span>
 					<span>D</span>
 					<span>E</span>
+					<span>F</span>
+					<span>G</span>
 				</div>
 				<div className='centerSVG'>
 				<Chart className='centerSVG' width='300px' height='200px'>
@@ -388,7 +386,13 @@ var Data = React.createClass({
 				</Chart>
 				</div>
 				<div className='tallyTEMP extraTOP'>
-					{this.state.polling[4]} votes
+					{this.state.polling[6]} votes
+				</div>
+				<div className='tallyTEMP'>
+					<span className='inlineSPAN'>{this.state.polling[5]} votes</span>
+				</div>
+				<div className='tallyTEMP'>
+					<span className='inlineSPAN'>{this.state.polling[4]} votes</span>
 				</div>
 				<div className='tallyTEMP'>
 					<span className='inlineSPAN'>{this.state.polling[3] } votes</span>
@@ -402,13 +406,12 @@ var Data = React.createClass({
 				<div className='tallyTEMP'>
 					<span className='inlineSPAN'>{this.state.polling[0]} votes</span>
 				</div>
+
 				<span className='mui--clearfix'></span>
 			</div>
 		);
 	}
 }); 
-
-
 var DataSeries = React.createClass({
   getDefaultProps: function() {
     return {
@@ -654,6 +657,7 @@ var AboutUs = React.createClass ({
 					<p>(408)348-9804</p>
 					<p>16388 Los Gatos Almaden Rd. 95032, Los Gatos, California</p>
 				</div>
+				<br/>
 			</div>
 		);
 	}
@@ -686,7 +690,9 @@ var QUESTIONS = [
 								" B - USA's #2 Priority",
 								" C - USA's top 5 priorities",
 								" D - USA's top 10 priorities",
-								" E - None of the above"
+								" D - I oppose Veganism",
+								" F - Test1",
+								" G - Test2"
 							],
 		votes 	: [
 								"5",   //E
@@ -717,7 +723,9 @@ var QUESTIONS = [
 								" B - Yes",
 								" C - Neutral",
 								" D - No",
-								" E - No, absolutly not!"
+								" E - No, absolutly not!",
+								" F - Test1",
+								" G - Test2"
 							],
 		votes 	: [
 								"5",   //E
@@ -745,7 +753,9 @@ var QUESTIONS = [
 								" B - Somewhat yes",
 								" C - Neutral",
 								" D - Somewhat No",
-								" E - No"
+								" E - No",
+								" F - Test1",
+								" G - Test2"
 							],
 		votes 	: [
 								"5",   //E
@@ -776,7 +786,9 @@ var QUESTIONS = [
 								" B - Mostly yes",
 								" C - Neutral",
 								" D - Mostly no",
-								" E - Absolutly not"
+								" E - Absolutly not",
+								" F - Test1",
+								" G - Test2"
 							],
 		votes 	: [
 								"5",   //E
@@ -804,7 +816,9 @@ var QUESTIONS = [
 								" B - Yes",
 								" C - I am not sure",
 								" D - No",
-								" E - Absolutly not"
+								" E - Absolutly not",
+								" F - Test1",
+								" G - Test2"
 							],
 		votes 	: [
 								"5",   //E
@@ -835,7 +849,9 @@ var QUESTIONS = [
 								" B - I work hard.",
 								" C - So so",
 								" D - I don't work hard.",
-								" E - I don't work hard at all!"
+								" E - I don't work hard at all!",
+								" F - Test1",
+								" G - Test2"
 							],
 		votes 	: [
 								"5",   //E
@@ -866,7 +882,9 @@ var QUESTIONS = [
 								" B - I support Veganism",
 								" C - Neutral",
 								" D - I oppose Veganism",
-								" E - I strongly oppose Veganism."
+								" E - I strongly oppose Veganism.",
+								" F - Test1",
+								" G - Test2"
 							],
 		votes 	: [
 								"5",   //E
@@ -886,9 +904,8 @@ var QUESTIONS = [
 							],
 		active: true
 	},
-
 	{
-	id: 7,
+	id: 8,
 	route:"AboutUs",
 	category: "Info",
 	breadcrumb: "About Us",

@@ -46,15 +46,26 @@ h1{
     -webkit-transition: width 1s; /* Safari 3.1 to 6.0 */
     transition: width 1s;
 }
-.drawer.fixed.mui--hidden-xs.mui-col-sm-3.mui-col-lg-2{
+.drawer.fixed.mui-col-sm-3.mui-col-lg-2{
 	display:block;
-	height:100vh;
 	overflow: scroll;
 	background-color: #fefefe;
 	padding:0px;
     -webkit-transition: width 1s; /* Safari 3.1 to 6.0 */
     transition: width 1s;
 }
+@media(max-width: 767px){
+	.drawer.fixed.mui-col-sm-3.mui-col-lg-2{
+		position: relative;
+	}
+}
+@media(min-width: 767px){
+	.drawer.fixed.mui-col-sm-3.mui-col-lg-2{
+		height:100vh;
+	}
+}
+
+
 .drawer header.menuHeader {
 	background-color: #fff;
 	box-shadow: none;
@@ -166,12 +177,14 @@ h1{
 	color:#FF6F00 !important;
 }
 .center{
-	float: right !important;
 	width:100%;
 	background-color: #eeeeee;
-	height:100vh;
-
-
+}
+@media(min-width: 767px){
+	div.center{
+		float:right ;
+		height:100vh;
+	}
 }
 .center.mui-col-sm-9{
 	padding:0px;
@@ -193,7 +206,8 @@ h1{
 	margin-top: 30px;
 	background-color: #fafafa;
 	padding:20px;
-	box-shadow: 0px 1px 4px  #aaa;}
+	box-shadow: 0px 1px 4px  #aaa;
+}
 .center .banner {
 	margin-top: 60px;
 	position: relative;
@@ -283,7 +297,8 @@ div.mui-checkbox{
 	display:block;
 	width: 200px;
 	float:left;
-	margin-left: 3px;
+	margin-top: 1.5px;
+	margin-left: 2px;
 	  transform: rotate(180deg);
 }
 
@@ -294,17 +309,18 @@ div.mui-checkbox{
 }
 .labelTEMP span{
 	display: block;
-	padding: 7.9px 8px;
-	margin-bottom: 3.7px;
+	padding: 4.2px 8px;
+	margin-bottom: 1.7px;
 	background-color: #9FA8DA;
 	color:#fff;
+	font-size: .9em;
 }
 
 .tallyTEMP{
 	display: block;
 	float:right;
-	padding: 7.9px 5px 7.9px 0px;
-	margin-bottom: 3.7px;
+	padding: 4.2px 5px 4.2px 0px;
+	margin-bottom: 1.7px;
 	margin-left: 0px;
 	background-color: #9FA8DA;
 	color:#fff;

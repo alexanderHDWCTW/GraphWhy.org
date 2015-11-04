@@ -84,7 +84,7 @@ console.log('logged out')
 app.get('/createvoter/:id', function(req, res, next){
   var temp = new votes.model({ 
   	  questionid: req.params.id,
-	  poll:[0,0,0,0,0]
+	  poll:[0,0,0,0,0,0,0]
   });
   temp.save(function(err,data){
     if(err) res.send("saved: failed");
@@ -118,8 +118,6 @@ app.get('/incrementvoter/:id/:answer', function(req, res, next){
 		  poll:temppoll,
 		  votes: tempvotes
 	  });
-	  temp.poll[req.params.answer] = temp.poll[req.params.answer] + 1;
-
 	  var notvoted = false;
 	  for(var i = 0; i < tempvotes.length; i++){
 	  	console.log(tempvotes[i].userid + " - " + req.session.user._id)
@@ -132,6 +130,7 @@ app.get('/incrementvoter/:id/:answer', function(req, res, next){
 	  temp.votes.push({
 	  	userid: req.session.user._id
 	  })
+    temp.poll[req.params.answer] = temp.poll[req.params.answer] + 1;
 	  }
 
 	  temp.save(function(err){
