@@ -60,7 +60,11 @@ var App = React.createClass({
 
 var Drawer = React.createClass({
 	getInitialState: function() {
-		return {showLogin: false};
+		var w = $(window).width();
+		return {
+			showLogin: false,
+			width: w
+		};
 	},
 	onClick: function() {
 		this.setState({show})
@@ -93,7 +97,7 @@ var Drawer = React.createClass({
 					</ul>
 					</ul>
 			</div>
-		);
+		)
 	}
 });
 
