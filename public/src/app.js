@@ -523,9 +523,7 @@ var Logout = React.createClass({
 		return(
 				<div className="signin-social">
 					<br/>
-					<div className='mui-col-xs-6'>
-						<button onClick={this.props.logoutfunc} className="mui-btn mui-btn--small mui-btn--primary mui--pull-right">Logout</button>
-					</div>
+						<button onClick={this.props.logoutfunc} className="mui-btn mui-btn--small mui-btn--primary">Logout</button>
 					<br/>
 					<br/>
 					<br/>
