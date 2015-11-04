@@ -630,9 +630,11 @@ var AboutUs = React.createClass ({
 				<div className='box'>
 				<br/>
 					<p>It has been said, 'Your opinion is most valueable possession you have', we believe that is true. This project exists to treat your opinion with the respect it deservers.
-					Let yourself be heard, for the benefit of this generation and next generations. We will never sell information gathered here.</p>
+					Let yourself be heard, for the benefit of this generation and future generations. We will never sell information gathered here.</p>
 					<p>We are not hear to bottle you up and sell you to the highest bidder. No one is going to get rich working on this site. This site is a labor of love, and a gift to anyone who seeks the perspective of others.</p>
-					<p>If you want to contribute please do. Email us with suggestions. Contribute questions you think are important. Share this site with a friend or loved one. As we gather feedback new features will be continue to be added.</p>
+					<p>The purpose of GraphWhy is not to impose a certain view point on people. Our objective is to shed light on why things are they ways they are at this moment in time.
+					To us the problem is not people having the wrong opinion, the problem is people not understanding the opinions of others. We hope you will agree.</p>
+					<p>If you want to contribute please do. Email us with suggestions. Contribute questions you think are important. Share this site with a friend or loved one. As we gather feedback new features will continue to be added.</p>
 					<br/>
 					<p className='mui--pull-right'>Best Regards,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p><br/><br/>
 					<p className='mui--pull-right'>Alexander McNulty,<br/> Thomas Shepard,<br/>Christopher Banh</p>
