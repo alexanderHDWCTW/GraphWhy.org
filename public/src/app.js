@@ -27,7 +27,7 @@ var App = React.createClass({
 		thiss.setState(store)
 	},
 	login: function(){
-		var emailp = $('#login').val();
+		var emailp = $('#loginp').val();
 		var passwordp = $('#passwordp').val();
 		var thiss = this;
 		$.post('/login', { email: emailp, password: passwordp }, function(data){
@@ -206,9 +206,9 @@ var Banner = React.createClass({
 					</div>
 					<span onClick={this.onClick} className="close">X</span>
 					<div className="taglineContainer">
-					<br/><br/>
+					<br/><br className="tiny-break"/>
 						<h5>The public opinion database</h5>
-						<h5>Help fight misunderstanding</h5>
+						<h5 className="">Help fight misunderstanding</h5>
 					</div>
 				</div>
 			);
@@ -295,27 +295,28 @@ var VoteField = React.createClass({
 		}
 
 		var obj = 
-				  <div className="mui--clearfix">
+					<div>
 					  <div className="warningBox mui--hidden-xs">
 					  	<span className='warning '>Please sign in to the left.</span>
 					  </div>
-					  <div className='warningBox mui--hidden-sm mui--hidden-md mui--hidden-lg'>
-					  	<span className='warning '>Please sign in to the left.</span>
+					  <div className='warningBox mui--col-12-xs mui--hidden-sm mui--hidden-md mui--hidden-lg'>
+					  	<span className='small-warning '>Please sign in Below.</span>
 					  </div>
-				  </div>;
+					</div>
 
 		if(this.props.loggedIn) obj = "";
 
 		return(
-			<div className="box">
+			<div className="box voteField">
 					<form id="myForm">
 						{options}
 					</form>
 					<hr/>
-					<span className='mui--pull-right'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+					<span className='mui--pull-right mui--hidden-xs'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
 				  <button className="mui-btn mui-btn--small mui-btn--primary mui--pull-right" onClick={this.props.func}>Submit</button>
-
+				  <div className="mui--clearfix">
 				  {obj}
+				  </div>
 			</div>
 		);
 	}
@@ -375,7 +376,7 @@ var Data = React.createClass({
 					<span>E</span>
 				</div>
 				<div className='centerSVG'>
-				<Chart className='centerSVG' width='450px' height='200px'>
+				<Chart className='centerSVG' width='300px' height='200px'>
 					<DataSeries data={data}
 									//	  questions={this.props.questions}
 									//	  activeQuestion={this.props.activeQuestion}
@@ -419,8 +420,6 @@ var DataSeries = React.createClass({
     var yScale = d3.scale.ordinal()
       .domain(d3.range(this.props.data.length))
       .rangeRoundBands([0, this.props.height], 0.05);
-
-
     var bars = _.map(this.props.data, function(point, i) {
       return (
         <Bar width={xScale(point)} height={yScale.rangeBand()} offset={yScale(i)} availableHeight={props.height} color={props.color} key={i} />
@@ -525,11 +524,9 @@ var Logout = React.createClass({
 		return(
 				<div className="signin-social">
 					<br/>
-					<div className='mui-col-xs-6'>
-						<button onClick={this.props.logoutfunc} className="mui-btn mui-btn--small mui-btn--primary mui--pull-right">Logout</button>
-					</div>
+						<button onClick={this.props.logoutfunc} className="mui-btn mui-btn--small mui-btn--primary">Logout</button>
 					<br/>
-					<br/>
+					<br/>Keep your chin up.
 					<br/>
 				</div>
 		)
@@ -632,32 +629,25 @@ var AboutUs = React.createClass ({
 		return (
 			<div className='aboutUs'>
 				<br/>
-				<h4>Where am I?</h4>
 				<div className='box'>
-					<p>Welcome to GraphWhy.org. Our objective is to educate the American public on important social issues.
-					</p>
-				</div><br/>
-				<h4> The Problem </h4>
+				<br/>
+					<p>It has been said, 'Your opinion is most valueable possession you have', we believe that is true. This project exists to treat your opinion with the respect it deservers.
+					Let yourself be heard, for the benefit of this generation and next generations. We will never sell information gathered here.</p>
+					<p>We are not hear to bottle you up and sell you to the highest bidder. No one is going to get rich working on this site. This site is a labor of love, and a gift to anyone who seeks the perspective of others.</p>
+					<p>If you want to contribute please do. Email us with suggestions. Contribute questions you think are important. Share this site with a friend or loved one. As we gather feedback new features will be continue to be added.</p>
+					<br/>
+					<p className='mui--pull-right'>Best Regards,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p><br/><br/>
+					<p className='mui--pull-right'>Alexander McNulty,<br/> Thomas Shepard,<br/>Christopher Banh</p>
+					<br/><br/>
+					<br/>
+				</div>
+				<br/>
+				<h4>Contact Information</h4>
 				<div className='box'>
-					<p>We believe, that most political conversations are filled with sh*t.</p>
-					<p>We believe, that American media fills the mind of the public with cr*p.</p>
-					<p>We believe, that the US working class if getting f*cked.</p>
-				</div><br/>
-				<h4> The Solution </h4>
-				<div className='box'>
-					<p>Share your opinions with everyone </p>
-					<p>Understand the opinions of others </p>
-					<p>Scrutinize the authorities in that space</p>
-				</div><br/>
-				<h4> How </h4>
-				<div className='box'>
-					<p>Share your opinions with everyone </p>
-					<p>Understand the opinions of others </p>
-					<p>Scrutinize the authorities in that space</p>
-				</div><br/>
-				<h4> Support </h4>
-				<div className='box'>
-					<p>GraphWhy.org currently does not allow anyone to ask questions, and does not allow anyone to leave comments. If you would like to contribute more than a vote please email Alexander.McNulty92@gmail.com</p>
+				<br/>
+					<p>Alexander.McNulty92@gmail.com</p>
+					<p>(408)348-9804</p>
+					<p>16388 Los Gatos Almaden Rd. 95032, Los Gatos, California</p>
 				</div>
 			</div>
 		);
@@ -685,7 +675,7 @@ var QUESTIONS = [
 		route:["FederalDebt", "/"],
 		category: "Question",
 		breadcrumb: "Federal Debt",
-		title		: "How important is the US federal debt?",
+		title		: "How important is the USA's federal debt?",
 		options :	[
 								" A - USA's #1 Priority",
 								" B - USA's #2 Priority",
@@ -716,7 +706,7 @@ var QUESTIONS = [
 		route:["FederalDebt", "/"],
 		category: "Question",
 		breadcrumb: "Federal Debt",
-		title		: "In ten years, will the average american have more buying power?",
+		title		: "Should the USA reduce military spending?",
 		options :	[
 								" A - Yes, absolutly!",
 								" B - Yes",
@@ -741,44 +731,16 @@ var QUESTIONS = [
 	},
 	{
 		id: 2,
-		route:["FederalDebt", "/"],
-		category: "Question",
-		breadcrumb: "Federal Debt",
-		title		: "Should we reduce military spending?",
-		options :	[
-								" A - Yes, absolutly!",
-								" B - Yes",
-								" C - Neutral",
-								" D - No",
-								" E - No, absolutly not!"
-							],
-		votes 	: [
-								"5",   //E
-								"6"   //D
-							],
-		comments: [	
-								{
-									vote:"",
-									name:"",
-									title:"",
-									date:"",
-									comment:""
-								}
-							],
-		active: true
-	},
-	{
-		id: 3,
 		route:"DrugLaw",
 		category: "Question",
 		breadcrumb: "Drug Law",
-		title		: "Should we legalize all drugs?",
+		title		: "Should the USA legalize all drugs?",
 		options :	[
-								" A - Yes, absolutly!",
-								" B - Yes",
+								" A - Yes",
+								" B - Somewhat yes",
 								" C - Neutral",
-								" D - No",
-								" E - No, absolutly not!"
+								" D - Somewhat No",
+								" E - No"
 							],
 		votes 	: [
 								"5",   //E
@@ -799,7 +761,129 @@ var QUESTIONS = [
 		active: false
 	},
 	{
-	id: 4 ,
+		id: 3,
+		route:["BetterWorld", "/"],
+		category: "Question",
+		breadcrumb: "Better World",
+		title		: "Is the world becoming a better place?",
+		options :	[
+								" A - Yes absolutly",
+								" B - Mostly yes",
+								" C - Neutral",
+								" D - Mostly no",
+								" E - Absolutly not"
+							],
+		votes 	: [
+								"5",   //E
+								"6"   //D
+							],
+		comments: [	
+								{
+									vote:"",
+									name:"",
+									title:"",
+									date:"",
+									comment:""
+								}
+							],
+		active: true
+	},
+		{
+		id: 4,
+		route:["Happiness", "/"],
+		category: "Question",
+		breadcrumb: "Happiness",
+		title		: "Are you happy?",
+		options :	[
+								" A - Absolutly, yes",
+								" B - Yes",
+								" C - I am not sure",
+								" D - No",
+								" E - Absolutly not"
+							],
+		votes 	: [
+								"5",   //E
+								"6",   //D
+								"9",   //C
+								"10",  //B
+								"1"    //An
+							],
+		comments: [	
+								{
+									vote:"",
+									name:"",
+									title:"",
+									date:"",
+									comment:""
+								}
+							],
+		active: true
+	},
+	{
+		id: 5,
+		route:["WorkEthic", "/"],
+		category: "Question",
+		breadcrumb: "Happiness",
+		title		: "How hard do you work?",
+		options :	[
+								" A - I push my limits everyday.",
+								" B - I work hard.",
+								" C - So so",
+								" D - I don't work hard.",
+								" E - I could do a lot more if I tried."
+							],
+		votes 	: [
+								"5",   //E
+								"6",   //D
+								"9",   //C
+								"10",  //B
+								"1"    //An
+							],
+		comments: [	
+								{
+									vote:"",
+									name:"",
+									title:"",
+									date:"",
+									comment:""
+								}
+							],
+		active: true
+	},
+	{
+		id: 6,
+		route:["Veganism", "/"],
+		category: "Question",
+		breadcrumb: "Veganism",
+		title		: "Do you support Veganism?",
+		options :	[
+								" A - I strongly support Veganism",
+								" B - I support Veganism",
+								" C - Neutral",
+								" D - I oppose Veganism",
+								" E - I strongly oppose Veganism."
+							],
+		votes 	: [
+								"5",   //E
+								"6",   //D
+								"9",   //C
+								"10",  //B
+								"1"    //An
+							],
+		comments: [	
+								{
+									vote:"",
+									name:"",
+									title:"",
+									date:"",
+									comment:""
+								}
+							],
+		active: true
+	},
+
+	{
+	id: 7,
 	route:"AboutUs",
 	category: "Info",
 	breadcrumb: "About Us",
@@ -807,6 +891,7 @@ var QUESTIONS = [
 	options : [],
 	votes: [],
 	comments: 			"<div className='mui-col-xs-12 mui-col-sm-10 mui-col-sm-offset-1 aboutUs'><br/><br/><h1> About Us </h1><h4>Where am I?</h4><div className='box'><p>Welcome to GraphWhy.org. Our objective is to educate the American public on important social issues.</p></div><br/><h4> The Problem </h4><div className='box'><p>We believe, that most political conversations are filled with sh*t.</p><p>We believe, that American media fills the mind of the public with cr*p.</p><p>We believe, that the US working class if getting f*cked.</p></div><br/><h4> The Solution </h4><div className='box'><p>Share your opinions with everyone </p><p>Understand the opinions of others </p><p>Scrutinize the authorities in that space</p></div><br/><h4> How </h4><div className='box'><p>Share your opinions with everyone </p><p>Understand the opinions of others </p><p>Scrutinize the authorities in that space</p></div><br/><h4> Support </h4><div className='box'><p>GraphWhy.org currently does not allow anyone to ask questions, and does not allow anyone to leave comments. If you would like to contribute more than a vote please email Alexander.McNulty92@gmail.com</p></div></div>"}
+
 ];
 
 

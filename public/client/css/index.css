@@ -17,6 +17,11 @@ h1{
 	padding: 10px 20px;
 	background-color: #FFECB3;
 }
+.small-warning{
+	background-color: #FFECB3;
+	font-size: 90%;
+	padding: 10px 3px;
+}
 .center .mui-row{
 	margin: 0;
 }
@@ -127,6 +132,10 @@ h1{
 .drawer .signin-social{ 
 	position: relative;
 }
+.drawer .signin-social button{ 
+	margin-top: 10px ;
+	margin-bottom: 0px;
+}
 .drawer .signin-social .mui-col-xs-6{
 	padding:0px;
 }
@@ -203,6 +212,14 @@ h1{
 	margin: 13px 17px;
 	cursor: pointer;
 }
+@media (max-width: 400px){
+	.center .banner .close{
+		margin-top: 6px;
+	}
+	.tiny-break{
+		display: none;
+	}	
+}
 .center .banner .bubbleContainer .bubble{
 	border-radius: 100px;
 	background-color: #FFB300;
@@ -218,8 +235,16 @@ h1{
 	padding: 20px;
 	background-color: #eeeeee;
 }
+@media (max-width: 480px){
+	div.main.mui-row{
+		padding: 8px;
+	}
+}
 .main .aboutUs .box {
 	margin-top: 0;
+}
+.main .aboutUs .box p.mui--pull-right{
+	padding-right: 10px;
 }
 .main .aboutUs h1{
 	margin-bottom: 33px;
@@ -240,10 +265,16 @@ div.mui-checkbox{
 	width:100%;
 	margin: 1px 0px;
 }
-
 .mui--pull-right.optionText{
 	width: 94%;
 }
+.box.voteField{
+	padding-bottom: 10px
+}
+.voteField hr{
+	margin-bottom: 10px;
+}
+
 
 .centerSVG{
 	display:block;
@@ -274,8 +305,9 @@ div.mui-checkbox{
 	margin-left: 0px;
 	background-color: #9FA8DA;
 	color:#fff;
-	width: 72px;
+	width: 62px;
 	text-align: right;
+	font-size: .9em;
 }
 .extraTOP{
 	margin-top: 9px;
