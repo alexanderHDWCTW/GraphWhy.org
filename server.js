@@ -155,28 +155,13 @@ app.get('/vote/:id/:answer', function(req, res, next){
 });
 
 app.get('/resetvoters', function( req, res, next){
-	User.model.find({},function(err, users){
-		users.forEach(function(user){
-
-		})
-		console.log(users.length);
-		for(var i = 0; i < users.length; i++){
-			User.model.findOne({_id: users[i]._id}, function(err, user){
-				user.poll = 0;
-				user.votes = 0;
-				console.log('user id' + user._id);
-				user.save();
-			});
-		}
-		res.send('saved');
-	});
-})
+	
+});
 
 app.get('/deletevoters', function(req, res, next){
 	votes.model.remove().exec();
 	res.send('deleted')
-})
-
+});
 
 app.get('/delete/:id', function(req,res,next){
   votes.model.findOne({_id:req.params.id}).remove(function(err){
@@ -195,7 +180,7 @@ app.post('/users', function(req, res, next){
 		if(err) res.send({status:400, data:null, message:err});
 		else res.send({status:200, data:null, message:tempUser+" Saved"});
 	}); 
-})
+});
 
 app.get('/users', function(req,res,next){
 	User.model.find({},function(err, users){
