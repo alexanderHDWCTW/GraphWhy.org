@@ -523,11 +523,10 @@ var Logout = React.createClass({
 	render: function() {
 		return(
 				<div className="signin-social">
-					<br/>
 						<button onClick={this.props.logoutfunc} className="mui-btn mui-btn--small mui-btn--primary">Logout</button>
 					<br/>
-					<br/>Keep your chin up.
-					<br/>
+					<br/>Take deep breaths.
+					<span className='version'>version 0.1</span>
 				</div>
 		)
 	}
@@ -832,7 +831,7 @@ var QUESTIONS = [
 								" B - I work hard.",
 								" C - So so",
 								" D - I don't work hard.",
-								" E - I could do a lot more if I tried."
+								" E - I don't work hard at all!"
 							],
 		votes 	: [
 								"5",   //E

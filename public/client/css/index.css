@@ -17,6 +17,9 @@ h1{
 	padding: 10px 20px;
 	background-color: #FFECB3;
 }
+.version{
+	color:#888;
+}
 .small-warning{
 	background-color: #FFECB3;
 	font-size: 90%;
