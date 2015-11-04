@@ -1,11 +1,20 @@
-
+var store = {		
+	activeQuestion: 0,		
+	okGotIt: 0, 
+	loggedIn: false
+};
 var App = React.createClass({
 	getInitialState: function() {
-		return {
-			activeQuestion: 0,
-			okGotIt: 0,
-			loggedIn: false
-		};
+		return store;
+	},
+	componentDidMount: function(){
+		var thiss = this;
+		$.get('/getlogged', function(data){
+			if(data != 'no'){
+				store.loggedIn = true;
+				thiss.setState(store);
+			}
+		})
 	},
 	changeCenter: function(id) {
 		store.activeQuestion = id;
@@ -13,10 +22,9 @@ var App = React.createClass({
 	},
 	logout: function(){
 		var thiss = this;
-		$.post('/logout');	
-		var tempstate = this.state;
-		tempstate.loggedIn = false;
-		thiss.setState(tempstate)
+		$.get('/logout');	
+		store.loggedIn = false;
+		thiss.setState(store)
 	},
 	login: function(){
 		var emailp = $('#loginp').val();
@@ -25,8 +33,8 @@ var App = React.createClass({
 		$.post('/login', { email: emailp, password: passwordp }, function(data){
 			if(data!='no'){
 				var tempstate = thiss.state;
-				tempstate.loggedIn = true;
-				thiss.setState(tempstate)
+				store.loggedIn = true;
+				thiss.setState(store)
 			}
 		});
 	},
@@ -173,7 +181,8 @@ var Center = React.createClass({
 				<Banner okGotIt={this.props.okGotIt} />
 				<Main activeQuestion={this.props.activeQuestion}
 							questions={this.props.questions} 
-							visitor={this.props.visitor} />
+							visitor={this.props.visitor} 
+							loggedIn={this.props.loggedIn} />
 				<Footer changeCenter={this.props.changeCenter}
 						  questions={this.props.questions}
 						  activeQuestion={this.props.activeQuestion}/>	
@@ -227,7 +236,7 @@ var Main = React.createClass({
 		var activeQuestion = this.props.activeQuestion;
 		return(
 			<div className="main mui-row"><br/>
-				<Question activeQuestion={this.props.activeQuestion}
+				<Question loggedIn={this.props.loggedIn} activeQuestion={this.props.activeQuestion}
 								  questions={this.props.questions} />
 			</div>
 		);
@@ -241,15 +250,13 @@ var Question = React.createClass({
     	};
     },
 	incrementVote: function(){
-		var tempstate = this.state;
-		tempstate.questions[this.props.activeQuestion].votes[
-		this.props.questions[
+		var qqid = this.props.questions[this.props.activeQuestion].options.length-$('input[name=radioName]:checked', '#myForm').val()-1
+		var qid = this.props.questions[this.props.activeQuestion].id;
 
-		this.props.activeQuestion].options.length-
-		$('input[name=radioName]:checked', '#myForm').val()-1
-
-		]++;
-		this.setState(tempstate);
+		$.get('/incrementvoter/'+qid+'/'+qqid, function(data){
+			/* TODO: on server side check if voted already
+			*/
+		})
 	
 	},
 	render: function() {
@@ -266,7 +273,7 @@ var Question = React.createClass({
 		return(
 			<div className="mui-col-xs-12 mui-col-sm-10 mui-col-sm-offset-1"><br/>
 				<h1 className='mainHeader'> {this.props.questions[activeQuestion].title} </h1>
-				<VoteField activeQuestion={this.props.activeQuestion}
+				<VoteField loggedIn={this.props.loggedIn} activeQuestion={this.props.activeQuestion}
 									 questions={this.props.questions} func={this.incrementVote}/>
 				<Data activeQuestion={this.props.activeQuestion}
 							questions={this.state.questions}/>
@@ -284,6 +291,19 @@ var VoteField = React.createClass({
 		for (var i=0; i < this.props.questions[activeQuestion].options.length; i++){
 			options.push(<RadioOption options={this.props.questions[activeQuestion].options[i]} index={i}/> );
 		}
+
+		var obj = 
+				  <div className="mui--clearfix">
+					  <div className="warningBox mui--hidden-xs">
+					  	<span className='warning '>Please sign in to the left.</span>
+					  </div>
+					  <div className='warningBox mui--hidden-sm mui--hidden-md mui--hidden-lg'>
+					  	<span className='warning '>Please sign in to the left.</span>
+					  </div>
+				  </div>;
+
+		if(this.props.loggedIn) obj = "";
+
 		return(
 			<div className="box">
 					<form id="myForm">
@@ -293,14 +313,7 @@ var VoteField = React.createClass({
 					<span className='mui--pull-right'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
 				  <button className="mui-btn mui-btn--small mui-btn--primary mui--pull-right" onClick={this.props.func}>Submit</button>
 
-				  <div className="mui--clearfix">
-					  <div className="warningBox mui--hidden-xs">
-					  	<span className='warning '> Please sign in to the left.</span>
-					  </div>
-					  <div className='warningBox mui--hidden-sm mui--hidden-md mui--hidden-lg'>
-					  	<span className='warning '> Please sign in to the below.</span>
-					  </div>
-				  </div>
+				  {obj}
 			</div>
 		);
 	}
@@ -317,13 +330,34 @@ var RadioOption = React.createClass({
 		);
 	}
 });
-
+var dataStore = {
+	polling: [0,0,0,0,0]
+}
 var Data = React.createClass({
+	getInitialState: function(){
+		return dataStore;
+	},
+	componentDidMount: function(){
+		var thiss = this;
+		var qid = this.props.questions[this.props.activeQuestion].id;
+		$.get('/showvoter/'+qid, function(data){
+			dataStore.polling = data.poll
+			thiss.setState(dataStore);
+		})
+	},
+	componentDidUpdate: function(){
+		var thiss = this;
+		var qid = this.props.questions[this.props.activeQuestion].id;
+		$.get('/showvoter/'+qid, function(data){
+			dataStore.polling = data.poll
+			thiss.setState(dataStore);
+		})
+	},
 	render: function(){
 		var activeQuestion =  this.props.activeQuestion;
 		var data = [];
-		for (var i=0; i < this.props.questions[activeQuestion].votes.length; i++){
-			data.push(this.props.questions[activeQuestion].votes[i]);
+		for (var i=0; i < this.state.polling.length; i++){
+			data.push(this.state.polling[i]);
 			var x = 0;
 			if (i > 0) {
 				x = i * 18;
@@ -347,19 +381,19 @@ var Data = React.createClass({
 				</Chart>
 				</div>
 				<div className='tallyTEMP extraTOP'>
-					{this.props.questions[activeQuestion].votes[4]} votes
+					{this.state.polling[4]} votes
 				</div>
 				<div className='tallyTEMP'>
-					<span className='inlineSPAN'>{this.props.questions[activeQuestion].votes[3] } votes</span>
+					<span className='inlineSPAN'>{this.state.polling[3] } votes</span>
 				</div>
 				<div className='tallyTEMP'>
-					<span className='inlineSPAN'>{this.props.questions[activeQuestion].votes[2]} votes</span>
+					<span className='inlineSPAN'>{this.state.polling[2]} votes</span>
 				</div>
 				<div className='tallyTEMP'>
-					<span className='inlineSPAN'>{this.props.questions[activeQuestion].votes[1]} votes</span>
+					<span className='inlineSPAN'>{this.state.polling[1]} votes</span>
 				</div>
 				<div className='tallyTEMP'>
-					<span className='inlineSPAN'>{this.props.questions[activeQuestion].votes[0]} votes</span>
+					<span className='inlineSPAN'>{this.state.polling[0]} votes</span>
 				</div>
 				<span className='mui--clearfix'></span>
 			</div>
@@ -698,8 +732,11 @@ var QUESTIONS = [
 		breadcrumb: "Federal Debt",
 		title		: "In ten years, will the average american have more buying power?",
 		options :	[
-								" A - Yes",
-								" B - No"
+								" A - Yes, absolutly!",
+								" B - Yes",
+								" C - Neutral",
+								" D - No",
+								" E - No, absolutly not!"
 							],
 		votes 	: [
 								"5",   //E
