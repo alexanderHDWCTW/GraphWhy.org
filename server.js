@@ -103,8 +103,11 @@ app.get('/showvoters', function(req, res, next){
 });
 
 app.get('/incrementvoter/:id/:answer', function(req, res, next){
+  if(!req.session.user) return res.send('no');
+
   votes.model.findOne({questionid:req.params.id}, function(err, user){
   	var temppoll = user.poll;
+  	var tempvotes = user.votes;
 
   	votes.model.find({_id:user._id}).remove(function(err){
   		
@@ -112,14 +115,29 @@ app.get('/incrementvoter/:id/:answer', function(req, res, next){
 
 	  var temp = new votes.model({ 
 	  	  questionid: req.params.id,
-		  poll:temppoll
+		  poll:temppoll,
+		  votes: tempvotes
 	  });
 	  temp.poll[req.params.answer] = temp.poll[req.params.answer] + 1;
-	  console.log(temp);
+
+	  var notvoted = false;
+	  for(var i = 0; i < tempvotes.length; i++){
+	  	console.log(tempvotes[i].userid + " - " + req.session.user._id)
+	  	if(tempvotes[i].userid == req.session.user._id){
+	  		notvoted = true;
+	  	}
+	  }
+
+	  if(!notvoted){
+	  temp.votes.push({
+	  	userid: req.session.user._id
+	  })
+	  }
 
 	  temp.save(function(err){
-	    if(err) res.send("saved: failed");
-	    res.redirect('/showvoter/'+req.params.id);
+	    if(err) return res.send("saved: failed");
+	    if(!notvoted) return res.send('lag');
+	    return res.send('alreadyvoted');
 	  });
 	 
    });
@@ -136,10 +154,14 @@ app.get('/vote/:id/:answer', function(req, res, next){
 	
 });
 
+app.get('/resetvoters', function( req, res, next){
+	
+});
+
 app.get('/deletevoters', function(req, res, next){
 	votes.model.remove().exec();
 	res.send('deleted')
-})
+});
 
 app.get('/delete/:id', function(req,res,next){
   votes.model.findOne({_id:req.params.id}).remove(function(err){
@@ -158,7 +180,7 @@ app.post('/users', function(req, res, next){
 		if(err) res.send({status:400, data:null, message:err});
 		else res.send({status:200, data:null, message:tempUser+" Saved"});
 	}); 
-})
+});
 
 app.get('/users', function(req,res,next){
 	User.model.find({},function(err, users){

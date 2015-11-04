@@ -254,6 +254,8 @@ var Question = React.createClass({
 		var qid = this.props.questions[this.props.activeQuestion].id;
 
 		$.get('/incrementvoter/'+qid+'/'+qqid, function(data){
+			if(data=='no') alert('please sign in first');
+			if(data=='alreadyvoted') alert('you can only vote once');
 			/* TODO: on server side check if voted already
 			*/
 		})
@@ -653,6 +655,21 @@ var AboutUs = React.createClass ({
 		);
 	}
 });
+
+/*HOWTO
+reset all voters localhost:port/resetvoters
+delete all voters localhost:port/deletevoters
+delete by id localhost:port/delete/voter._id
+show by voter id localhost:port/showvoter/voter._id
+show all voters localhost:port/showvoters
+increment voter localhost:port/incrementvoter/voter._id/optionnumber
+
+
+if you create a new question here, create a voter for that question id, should
+probably check to see if that question exists using showvoters
+
+
+*/
 
 var QUESTIONS = [
 	{
