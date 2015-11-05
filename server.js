@@ -196,7 +196,7 @@ app.post('/users', function(req, res, next){
 	});
 	tempUser.save(function(err, data){
 		if(err) res.send({status:400, data:null, message:err});
-		else res.send({status:200, data:null, message:tempUser+" Saved"});
+		else res.send(req.body.password);
 	}); 
 });
 
