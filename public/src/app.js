@@ -339,7 +339,6 @@ var dataStore = {
 }
 var Data = React.createClass({
 	getInitialState: function(){
-		alert(dataStore)
 		return dataStore;
 	},
 	componentDidMount: function(){
@@ -728,9 +727,9 @@ var QUESTIONS = [
 								" B - Yes",
 								" C - Probably should",
 								" D - Neutral",
-								" "
+								" fsddfs",
 								" E - No",
-								" F - No, absolutly not!",
+								" F - No, absolutly not!"
 							],
 		votes 	: [
 								"5",   //E
