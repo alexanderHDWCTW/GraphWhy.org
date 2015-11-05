@@ -358,9 +358,6 @@ var Data = React.createClass({
 		})
 	},
 	render: function(){
-		if(typeof this.state.polling != 'undefined'){
-			this.state.polling = [0,0,0,0,0,0,0]
-		}
 		var activeQuestion =  this.props.activeQuestion;
 		var data = [];
 			for (var i=0; i < this.state.polling.length; i++){
