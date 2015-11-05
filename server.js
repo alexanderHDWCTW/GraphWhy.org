@@ -126,6 +126,8 @@ app.get('/incrementvoter/:id/:answer', function(req, res, next){
 	  	}
 	  }
 
+	  var alreadys = false;
+
 	  if(!notvoted){
 	  	temp.votes.push({
 	  		userid: req.session.user._id,
@@ -134,7 +136,7 @@ app.get('/incrementvoter/:id/:answer', function(req, res, next){
     	temp.poll[req.params.answer] = temp.poll[req.params.answer] + 1;
 	  }else{
 	  	if(req.params.answer == temp.votes[savei].vote){
-	  		return res.send('alreadyvoted')
+	  		alreadys = true;
 	  	}else{
 	  		temp.poll[req.params.answer] = temp.poll[req.params.answer] + 1;
 	  		temp.poll[temp.votes[savei].vote] = temp.poll[temp.votes[savei].vote] - 1;
@@ -144,6 +146,7 @@ app.get('/incrementvoter/:id/:answer', function(req, res, next){
 
 	  temp.save(function(err){
 	    if(err) return res.send("saved: failed");
+	    if(alreadys) return res.send('alreadyvoted');
 	    if(!notvoted) return res.send('lag');
 	    return res.send('changed');
 	  });
