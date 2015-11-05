@@ -357,15 +357,18 @@ var Data = React.createClass({
 		})
 	},
 	render: function(){
+		if(typeof this.state.polling != 'undefined'){
+			this.state.polling = [0,0,0,0,0,0,0]
+		}
 		var activeQuestion =  this.props.activeQuestion;
 		var data = [];
-		for (var i=0; i < this.state.polling.length; i++){
-			data.push(this.state.polling[i]);
-			var x = 0;
-			if (i > 0) {
-				x = i * 18;
+			for (var i=0; i < this.state.polling.length; i++){
+				data.push(this.state.polling[i]);
+				var x = 0;
+				if (i > 0) {
+					x = i * 18;
+				}
 			}
-		}
 		return(
 			<div className='box graph'>
 				<div className='labelTEMP'>
@@ -688,11 +691,11 @@ var QUESTIONS = [
 		options :	[
 								" A - USA's #1 Priority",
 								" B - USA's #2 Priority",
-								" C - USA's top 5 priorities",
-								" D - USA's top 10 priorities",
-								" D - I oppose Veganism",
-								" F - Test1",
-								" G - Test2"
+								" C - In the USA's top 5 priorities",
+								" D - In the USA's top 10 priorities",
+								" D - In the USA's top 15 priorities",
+								" F - In the USA's top 25 priorities",
+								" G - None of the above"
 							],
 		votes 	: [
 								"5",   //E
@@ -721,11 +724,11 @@ var QUESTIONS = [
 		options :	[
 								" A - Yes, absolutly!",
 								" B - Yes",
-								" C - Neutral",
-								" D - No",
-								" E - No, absolutly not!",
-								" F - Test1",
-								" G - Test2"
+								" C - Probably should",
+								" D - Neutral",
+								" "
+								" E - No",
+								" F - No, absolutly not!",
 							],
 		votes 	: [
 								"5",   //E
@@ -905,7 +908,7 @@ var QUESTIONS = [
 		active: true
 	},
 	{
-	id: 8,
+	id: 7,
 	route:"AboutUs",
 	category: "Info",
 	breadcrumb: "About Us",
