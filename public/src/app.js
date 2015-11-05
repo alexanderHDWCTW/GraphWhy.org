@@ -717,16 +717,16 @@ var QUESTIONS = [
 		id: 1,
 		route:["FederalDebt", "/"],
 		category: "Question",
-		breadcrumb: "Federal Debt",
-		title		: "Should the USA reduce military spending?",
+		breadcrumb: "military",
+		title		: "Should the USA reduce military budget?",
 		options :	[
 								" A - Yes, absolutly!",
 								" B - Yes",
-								" C - Probably should",
+								" C - Yes, they probably should",
 								" D - Neutral",
-								" fsddfs",
-								" E - No",
-								" F - No, absolutly not!"
+								" E - No, they probably should not",
+								" F - No",
+								" G - No, absolutly not!"
 							],
 		votes 	: [
 								"5",   //E
@@ -750,13 +750,13 @@ var QUESTIONS = [
 		breadcrumb: "Drug Law",
 		title		: "Should the USA legalize all drugs?",
 		options :	[
-								" A - Yes",
-								" B - Somewhat yes",
-								" C - Neutral",
-								" D - Somewhat No",
-								" E - No",
-								" F - Test1",
-								" G - Test2"
+								" A - Yes, absolutly",
+								" B - Yes",
+								" C - Somewhat yes",
+								" D - Neutral",
+								" E - Somewhat No",
+								" F - No",
+								" G - No, absolutly not"
 							],
 		votes 	: [
 								"5",   //E
@@ -785,11 +785,11 @@ var QUESTIONS = [
 		options :	[
 								" A - Yes absolutly",
 								" B - Mostly yes",
-								" C - Neutral",
-								" D - Mostly no",
-								" E - Absolutly not",
-								" F - Test1",
-								" G - Test2"
+								" C - Somewhat yes"
+								" D - Neutral",
+								" E - Somewhat no",
+								" F - Mostly no",
+								" G - Absolutly not"
 							],
 		votes 	: [
 								"5",   //E
@@ -813,13 +813,13 @@ var QUESTIONS = [
 		breadcrumb: "Happiness",
 		title		: "Are you happy?",
 		options :	[
-								" A - Absolutly, yes",
-								" B - Yes",
-								" C - I am not sure",
-								" D - No",
-								" E - Absolutly not",
-								" F - Test1",
-								" G - Test2"
+								" A - Yes, absolutly",
+								" B - Yes, mostly",
+								" C - Yes, somewhat",
+								" D - I am not sure",
+								" E - Somewhat not",
+								" F - Mostly not"
+								" F - Absolutly not"
 							],
 		votes 	: [
 								"5",   //E
@@ -847,12 +847,12 @@ var QUESTIONS = [
 		title		: "How hard do you work?",
 		options :	[
 								" A - I push my limits everyday.",
+								" B - I work very hard.",
 								" B - I work hard.",
 								" C - So so",
 								" D - I don't work hard.",
-								" E - I don't work hard at all!",
-								" F - Test1",
-								" G - Test2"
+								" E - I hardly ever work",
+								" F - I don't work hard at all!"
 							],
 		votes 	: [
 								"5",   //E
@@ -880,12 +880,12 @@ var QUESTIONS = [
 		title		: "Do you support Veganism?",
 		options :	[
 								" A - I strongly support Veganism",
-								" B - I support Veganism",
-								" C - Neutral",
-								" D - I oppose Veganism",
-								" E - I strongly oppose Veganism.",
-								" F - Test1",
-								" G - Test2"
+								" B - I mostly support Veganism",
+								" C - I somewhat support Veganism",
+								" D - Neutral",
+								" E - I somewhat oppose Veganism",
+								" F - I mostly oppose Veganism.",
+								" G - I strongly oppose Veganism"
 							],
 		votes 	: [
 								"5",   //E
