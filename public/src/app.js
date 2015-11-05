@@ -685,15 +685,15 @@ var QUESTIONS = [
 		route:["FederalDebt", "/"],
 		category: "Question",
 		breadcrumb: "Federal Debt",
-		title		: "How important is the USA's federal debt?",
+		title		: "Should the USA begin paying off it's FederalDebt",
 		options :	[
-								" A - USA's #1 Priority",
-								" B - USA's #2 Priority",
-								" C - In the USA's top 5 priorities",
-								" D - In the USA's top 10 priorities",
-								" D - In the USA's top 15 priorities",
-								" F - In the USA's top 25 priorities",
-								" G - None of the above"
+								" A - Yes, absolutly",
+								" B - Yes, mostly",
+								" C - Yes, somewhat",
+								" D - Neutral",
+								" D - Somewhat no",
+								" F - Mostly no",
+								" G - Absolutly not"
 							],
 		votes 	: [
 								"5",   //E
@@ -720,13 +720,13 @@ var QUESTIONS = [
 		breadcrumb: "military",
 		title		: "Should the USA reduce military budget?",
 		options :	[
-								" A - Yes, absolutly!",
-								" B - Yes",
-								" C - Yes, they probably should",
-								" D - Neutral",
-								" E - No, they probably should not",
-								" F - No",
-								" G - No, absolutly not!"
+								" A - Yes, decrease 21% or more",
+								" B - Yes, decrease 11-20%",
+								" C - Yes, decrease 1-10%",
+								" D - It Should not change",
+								" E - No, increase 1-10%",
+								" F - No, increase 11-20%",
+								" G - No, increase 21% or more"
 							],
 		votes 	: [
 								"5",   //E
@@ -751,11 +751,11 @@ var QUESTIONS = [
 		title		: "Should the USA legalize all drugs?",
 		options :	[
 								" A - Yes, absolutly",
-								" B - Yes",
+								" B - Yes, mostly",
 								" C - Somewhat yes",
 								" D - Neutral",
 								" E - Somewhat No",
-								" F - No",
+								" F - No, mostly not",
 								" G - No, absolutly not"
 							],
 		votes 	: [
@@ -781,11 +781,11 @@ var QUESTIONS = [
 		route:["BetterWorld", "/"],
 		category: "Question",
 		breadcrumb: "Better World",
-		title		: "Is the world becoming a better place?",
+		title		: "Based on your values, is the world becoming a better place?",
 		options :	[
 								" A - Yes absolutly",
 								" B - Mostly yes",
-								" C - Somewhat yes"
+								" C - Somewhat yes",
 								" D - Neutral",
 								" E - Somewhat no",
 								" F - Mostly no",
@@ -818,7 +818,7 @@ var QUESTIONS = [
 								" C - Yes, somewhat",
 								" D - I am not sure",
 								" E - Somewhat not",
-								" F - Mostly not"
+								" F - Mostly not",
 								" F - Absolutly not"
 							],
 		votes 	: [
@@ -846,12 +846,12 @@ var QUESTIONS = [
 		breadcrumb: "Happiness",
 		title		: "How hard do you work?",
 		options :	[
-								" A - I push my limits everyday.",
+								" A - I push my limits everyday!",
 								" B - I work very hard.",
 								" B - I work hard.",
 								" C - So so",
 								" D - I don't work hard.",
-								" E - I hardly ever work",
+								" E - I hardly ever work.",
 								" F - I don't work hard at all!"
 							],
 		votes 	: [
@@ -879,13 +879,13 @@ var QUESTIONS = [
 		breadcrumb: "Veganism",
 		title		: "Do you support Veganism?",
 		options :	[
-								" A - I strongly support Veganism",
-								" B - I mostly support Veganism",
-								" C - I somewhat support Veganism",
+								" A - I strongly support Veganism.",
+								" B - I mostly support Veganism.",
+								" C - I somewhat support Veganism.",
 								" D - Neutral",
-								" E - I somewhat oppose Veganism",
+								" E - I somewhat oppose Veganism.",
 								" F - I mostly oppose Veganism.",
-								" G - I strongly oppose Veganism"
+								" G - I strongly oppose Veganism."
 							],
 		votes 	: [
 								"5",   //E
