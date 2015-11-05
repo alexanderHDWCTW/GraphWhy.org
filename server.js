@@ -108,11 +108,11 @@ app.get('/incrementvoter/:id/:answer', function(req, res, next){
   votes.model.findOne({questionid:req.params.id}, function(err, user){
   	var temppoll = user.poll;
   	var tempvotes = user.votes;
-
+ 
   	votes.model.find({_id:user._id}).remove(function(err){
   		
   	});
-
+  	var savei;
 	  var temp = new votes.model({ 
 	  	  questionid: req.params.id,
 		  poll:temppoll,
@@ -120,23 +120,32 @@ app.get('/incrementvoter/:id/:answer', function(req, res, next){
 	  });
 	  var notvoted = false;
 	  for(var i = 0; i < tempvotes.length; i++){
-	  	console.log(tempvotes[i].userid + " - " + req.session.user._id)
 	  	if(tempvotes[i].userid == req.session.user._id){
 	  		notvoted = true;
+	  		savei = i;
 	  	}
 	  }
 
 	  if(!notvoted){
-	  temp.votes.push({
-	  	userid: req.session.user._id
-	  })
-    temp.poll[req.params.answer] = temp.poll[req.params.answer] + 1;
+	  	temp.votes.push({
+	  		userid: req.session.user._id,
+	  		vote: req.params.answer
+	  	})
+    	temp.poll[req.params.answer] = temp.poll[req.params.answer] + 1;
+	  }else{
+	  	if(req.params.answer == temp.votes[savei].vote){
+	  		return res.send('alreadyvoted')
+	  	}else{
+	  		temp.poll[req.params.answer] = temp.poll[req.params.answer] + 1;
+	  		temp.poll[temp.votes[savei].vote] = temp.poll[temp.votes[savei].vote] - 1;
+	  		temp.votes[savei].vote = req.params.answer;
+	  	}
 	  }
 
 	  temp.save(function(err){
 	    if(err) return res.send("saved: failed");
 	    if(!notvoted) return res.send('lag');
-	    return res.send('alreadyvoted');
+	    return res.send('changed');
 	  });
 	 
    });
@@ -154,7 +163,14 @@ app.get('/vote/:id/:answer', function(req, res, next){
 });
 
 app.get('/resetvoters', function( req, res, next){
-	
+	votes.model.find({},function(err, users){
+		users.forEach(function(user){
+			user.votes = [];
+			user.poll = [0,0,0,0,0,0,0];
+			user.save();
+		})
+		res.send({status:200, data:users, message:"saved"});
+	});
 });
 
 app.get('/deletevoters', function(req, res, next){

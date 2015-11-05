@@ -5,6 +5,7 @@ var Votes = new VotesSchema({
   poll:[Number],
   votes:[{
   	userid: String, 
+  	vote: Number,
   	time : { type : Date, default: Date.now }
   }]
 });
