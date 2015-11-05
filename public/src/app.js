@@ -256,6 +256,7 @@ var Question = React.createClass({
 		$.get('/incrementvoter/'+qid+'/'+qqid, function(data){
 			if(data=='no') alert('please sign in first');
 			if(data=='alreadyvoted') alert('you can only vote once');
+			if(data=='changed') alert('you changed your vote')
 			/* TODO: on server side check if voted already
 			*/
 		})
@@ -338,6 +339,7 @@ var dataStore = {
 }
 var Data = React.createClass({
 	getInitialState: function(){
+		alert(dataStore)
 		return dataStore;
 	},
 	componentDidMount: function(){
