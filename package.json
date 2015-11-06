@@ -13,11 +13,17 @@
     "mongodb": "*",
     "mongoose": "*",
     "crypto": "*",
-    "client-sessions": "*"
+    "client-sessions": "*",
+    "gulp": "^3.9.0",
+    "gulp-concat": "*",
+    "browserify": "^11.2.0"
   },
   "devDependencies": {
     "babelify": "^6.4.0",
-    "browserify": "^12.0.0"
+    "browserify": "^12.0.0",
+    "del": "^2.0.2",
+    "gulp-sass": "^2.0.4",
+    "vinyl-source-stream": "^1.1.0"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
