@@ -1,5 +1,5 @@
 var store = {		
-	activeQuestion: 0,		
+	activeQuestion: 8,		
 	okGotIt: 0, 
 	loggedIn: false
 };
@@ -37,6 +37,8 @@ var App = React.createClass({
 				thiss.setState(store)
 			}
 		});
+		store.activeQuestion = 0;
+		this.setState(store);
 	},
 	regisfunc: function(){
 		var emaili = $('#email').val();
@@ -51,8 +53,9 @@ var App = React.createClass({
 						thiss.setState(store)
 					}
 				});
-				
 		});
+		store.activeQuestion = 0;
+		this.setState(store);
 	},
 	render: function() {
 		return(
@@ -61,6 +64,8 @@ var App = React.createClass({
 						  questions={this.props.questions}
 						  okGotIt={this.state.okGotIt} 
 						  changeCenter={this.changeCenter}
+						  loginfunc={this.login} 
+						  regisfunc={this.regisfunc}
 						  loggedIn={this.state.loggedIn} />
 		<Drawer changeCenter={this.changeCenter}
 						  questions={this.props.questions}
@@ -107,7 +112,10 @@ var Drawer = React.createClass({
 				<div className="mui-divider"></div>
 				<br/>
 				<ul>
-					<SigninButton regisfunc={this.props.regisfunc} loggedIn={this.props.loggedIn} logoutfunc={this.props.logoutfunc} loginfunc={this.props.loginfunc} />
+					<SigninButton regisfunc={this.props.regisfunc}
+								  loggedIn={this.props.loggedIn}
+								  logoutfunc={this.props.logoutfunc} 
+								  loginfunc={this.props.loginfunc} />
 					<li className='category questions'><b>Questions</b></li>
 					<ul className='sub'>
 						{questionTitles}
@@ -118,43 +126,6 @@ var Drawer = React.createClass({
 	}
 });
 
-var Footer = React.createClass({
-	getInitialState: function() {
-		return {showLogin: false};
-	},
-	onClick: function() {
-		this.setState({show})
-	},
-	render: function() {
-		var questionTitles = [];
-		for (var i=0; i < this.props.questions.length; i++) {
-			questionTitles.push(<QuestionLink changeCenter={this.props.changeCenter}
-																				questions={this.props.questions}
-																				activeQuestion={this.props.activeQuestion}
-													  						id={this.props.questions[i].id}
-													  						title={this.props.questions[i].title} />); 
-		}
-		return(
-			<div className="drawer footer mui-col-xs-12 mui--hidden-sm mui--hidden-md mui--hidden-lg">
-				<header className='menuHeader'>
-					<h3>
-						<a href="#">
-							GraphWhy.org
-						</a>
-					</h3>
-				</header>
-				<div className="mui-divider"></div>
-				<ul>
-					<SigninButton />
-					<li className='category questions'><b>Questions</b></li>
-					<ul className='sub'>
-						{questionTitles}
-					</ul>
-					</ul>
-			</div>
-		);
-	}
-});
 var QuestionLink = React.createClass({
 	handleClick: function(id) {
 		var self = this;
@@ -203,7 +174,9 @@ var Center = React.createClass({
 				<Main activeQuestion={this.props.activeQuestion}
 							questions={this.props.questions} 
 							visitor={this.props.visitor} 
-							loggedIn={this.props.loggedIn} />
+							loggedIn={this.props.loggedIn}
+							loginfunc={this.props.login} 
+						    regisfunc={this.props.regisfunc} />
 			</div>
 		);
 	}
@@ -254,8 +227,11 @@ var Main = React.createClass({
 		var activeQuestion = this.props.activeQuestion;
 		return(
 			<div className="main mui-row"><br/>
-				<Question loggedIn={this.props.loggedIn} activeQuestion={this.props.activeQuestion}
-								  questions={this.props.questions} />
+				<Question loggedIn={this.props.loggedIn}
+								  activeQuestion={this.props.activeQuestion}
+								  questions={this.props.questions}
+								  loginfunc={this.props.login} 
+								  regisfunc={this.props.regisfunc} />
 			</div>
 		);
 	}
@@ -281,12 +257,16 @@ var Question = React.createClass({
 	},
 	render: function() {
 		var activeQuestion = this.props.activeQuestion;
-		if (this.props.questions[activeQuestion].title == "About Us") {
+		if (this.props.questions[activeQuestion].id > 999) {
 		return (
 			<div className="mui-col-xs-12 mui-col-sm-10 mui-col-sm-offset-1"><br/>
 				<h1 className='mainHeader'> {this.props.questions[activeQuestion].title} </h1>
 				<Comments activeQuestion={this.props.activeQuestion}
-								  questions={this.props.questions}/>
+								  questions={this.props.questions}
+								  loggedIn={this.props.loggedIn}
+								  loginfunc={this.props.login} 
+								  regisfunc={this.props.regisfunc}
+								  changeCenter={this.props.changeCenter} />
 			</div>
 		);
 		} else {
@@ -486,6 +466,16 @@ var Comments = React.createClass({
 			return (
 				<AboutUs />
 			);
+		} else if (this.props.questions[activeQuestion].title == "Sign In"){
+			return (
+				<div>
+				<br/>
+					<h3>Sign Up</h3>
+					<Signup regisfunc={this.props.regisfunc} />
+					<h3>Log In</h3>
+					<Login loginfunc={this.props.loginfunc} />
+				</div>
+			);
 		} else if (this.props.questions[activeQuestion].comments[0].title == "") {
 			return (
 				<div><br/><br/>
@@ -560,7 +550,7 @@ var Logout = React.createClass({
 var Login = React.createClass({
 	render: function() {
 		return(
-			<div className="">
+			<div className="box">
 					<ul className='signin'>
 						<li>
 							<div className="mui-textfield mui-textfield--float-label">
@@ -598,7 +588,7 @@ var Login = React.createClass({
 var Signup = React.createClass({
 	render: function() {
 		return(
-			<div className="">
+			<div className="box">
 					<ul className='signin'>
 						<li>
 							<div className="mui-textfield mui-textfield--float-label">
@@ -916,15 +906,25 @@ var QUESTIONS = [
 		active: true
 	},
 	{
-	id: 7,
-	route:"AboutUs",
-	category: "Info",
-	breadcrumb: "About Us",
-	title: "About Us",
-	options : [],
-	votes: [],
-	comments: 			"<div className='mui-col-xs-12 mui-col-sm-10 mui-col-sm-offset-1 aboutUs'><br/><br/><h1> About Us </h1><h4>Where am I?</h4><div className='box'><p>Welcome to GraphWhy.org. Our objective is to educate the American public on important social issues.</p></div><br/><h4> The Problem </h4><div className='box'><p>We believe, that most political conversations are filled with sh*t.</p><p>We believe, that American media fills the mind of the public with cr*p.</p><p>We believe, that the US working class if getting f*cked.</p></div><br/><h4> The Solution </h4><div className='box'><p>Share your opinions with everyone </p><p>Understand the opinions of others </p><p>Scrutinize the authorities in that space</p></div><br/><h4> How </h4><div className='box'><p>Share your opinions with everyone </p><p>Understand the opinions of others </p><p>Scrutinize the authorities in that space</p></div><br/><h4> Support </h4><div className='box'><p>GraphWhy.org currently does not allow anyone to ask questions, and does not allow anyone to leave comments. If you would like to contribute more than a vote please email Alexander.McNulty92@gmail.com</p></div></div>"}
-
+		id: 1000,
+		route:"AboutUs",
+		category: "Site",
+		breadcrumb: "About Us",
+		title: "About Us",
+		options : [],
+		votes: [],
+		comments: 			"<div className='mui-col-xs-12 mui-col-sm-10 mui-col-sm-offset-1 aboutUs'><br/><br/><h1> About Us </h1><h4>Where am I?</h4><div className='box'><p>Welcome to GraphWhy.org. Our objective is to educate the American public on important social issues.</p></div><br/><h4> The Problem </h4><div className='box'><p>We believe, that most political conversations are filled with sh*t.</p><p>We believe, that American media fills the mind of the public with cr*p.</p><p>We believe, that the US working class if getting f*cked.</p></div><br/><h4> The Solution </h4><div className='box'><p>Share your opinions with everyone </p><p>Understand the opinions of others </p><p>Scrutinize the authorities in that space</p></div><br/><h4> How </h4><div className='box'><p>Share your opinions with everyone </p><p>Understand the opinions of others </p><p>Scrutinize the authorities in that space</p></div><br/><h4> Support </h4><div className='box'><p>GraphWhy.org currently does not allow anyone to ask questions, and does not allow anyone to leave comments. If you would like to contribute more than a vote please email Alexander.McNulty92@gmail.com</p></div></div>"
+	},	
+	{
+		id: 1001,
+		route: "SignIn",
+		category: "Site",
+		breadcrumb: "Sign In",
+		title: "Sign In",
+		options: [],
+		votes: [],
+		comments: ""
+	}
 ];
 
 

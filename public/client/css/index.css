@@ -271,6 +271,9 @@ h1{
 .signin-social{
 	text-align: center;
 }
+.center .box ul.signin{
+	list-style: none !important;
+}
 .signin-social img{
 	margin:5px 0px 5px 0px; 
 }
@@ -330,65 +333,4 @@ div.mui-checkbox{
 }
 .extraTOP{
 	margin-top: 9px;
-}
-
-@media (max-width: 400px) {
-	.mui-col-xs-12{
-		padding-right: 0px !important;
-		padding-left: 0px !important;
-	}
-	.box.graph{
-		padding: 3px !important;
-	}
-}
-@media (min-width: 390px){
-	.tallyTEMP{
-		margin-left: 30px;
-	}
-}
-@media (min-width: 401px){
-	.tallyTEMP{
-		margin-left: 0px;
-	}
-}
-@media (min-width: 430px){
-	.tallyTEMP{
-		margin-left: 50px;
-	}
-}
-@media (min-width: 520px){
-	.tallyTEMP{
-		margin-left: 130px;
-	}
-}
-
-@media (min-width: 700px){
-	.tallyTEMP{
-		margin-left: 240px;
-	}
-}
-@media (min-width: 768px){
-	.tallyTEMP{
-		margin-left: 60px;
-	}
-}
-@media (min-width: 910px){
-	.tallyTEMP{
-		margin-left: 120px;
-	}
-}
-@media (min-width: 1050px){
-	.tallyTEMP{
-		margin-left: 220px;
-	}
-}
-@media (min-width: 1190px){
-	.tallyTEMP{
-		margin-left: 330px;
-	}
-}
-@media (min-width: 1440px){
-	.tallyTEMP{
-		margin-left: 530px;
-	}
 }
