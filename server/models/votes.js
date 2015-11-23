@@ -11,4 +11,3 @@ var Votes = new VotesSchema({
 });
 
 module.exports.model = mongoose.model("GraphyVotes", Votes);
-

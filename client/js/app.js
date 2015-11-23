@@ -1,3 +1,7 @@
+var React = require("react");
+var ReactDOM = require("react-dom");
+var _ = require("underscore");
+
 var store = {		
 	activeQuestion: 0,		
 	okGotIt: 0, 
@@ -244,7 +248,7 @@ var Header = React.createClass({
 		//is there a way to read the route in jsx?
 		return(
 			<header className="fixed header">
- 				<h3>{this.props.questions[activeQuestion].category} > {this.props.questions[activeQuestion].breadcrumb}</h3>
+ 				<h3>{this.props.questions[activeQuestion].category} &#62; {this.props.questions[activeQuestion].breadcrumb}</h3>
 			</header>
 		);
 	}
@@ -394,17 +398,21 @@ var Data = React.createClass({
 					<span>E</span>
 					<span>F</span>
 					<span>G</span>
+					<span>H</span>
 				</div>
 				<div className='centerSVG'>
-				<Chart className='centerSVG' width='300px' height='200px'>
+				<Chart className='centerSVG' width='300px' height='230px'>
 					<DataSeries data={data}
 									//	  questions={this.props.questions}
 									//	  activeQuestion={this.props.activeQuestion}
-										  width='300' height='200' color="#3F51B5" /> 
+										  width='300' height='230' color="#3F51B5" /> 
 				</Chart>
 				</div>
 				<div className='tallyTEMP extraTOP'>
-					{this.state.polling[6]} votes
+					{this.state.polling[7]} votes
+				</div>
+				<div className='tallyTEMP'>
+					<span className='inlineSPAN'>{this.state.polling[6]} votes</span>
 				</div>
 				<div className='tallyTEMP'>
 					<span className='inlineSPAN'>{this.state.polling[5]} votes</span>
@@ -550,8 +558,8 @@ var Logout = React.createClass({
 				<div className="signin-social">
 						<button onClick={this.props.logoutfunc} className="mui-btn mui-btn--small mui-btn--primary">Logout</button>
 					<br/>
-					<br/>Take deep breaths.
-					<span className='version'>version 0.1</span>
+					<br/><span className=''> Welcome!</span>
+					<span className='version'>version 0.1.1</span>
 				</div>
 		)
 	}
@@ -649,16 +657,14 @@ var AboutUs = React.createClass ({
 				<div className='box'>
 				<br/>
 					<p>It has been said, 'Your opinion is most valueable possession you have', we believe that is true. This project exists to treat your opinion with the respect it deservers.
-					Let yourself be heard, for the benefit of this generation and future generations. We will never sell information gathered here.</p>
-					<p>We are not hear to bottle you up and sell you to the highest bidder. No one is going to get rich working on this site. This site is a labor of love, and a gift to anyone who seeks the perspective of others.</p>
-					<p>The purpose of GraphWhy is not to impose a certain view point on people. Our objective is to shed light on why things are they ways they are at this moment in time.
-					To us the problem is not people having the wrong opinion, the problem is people not understanding the opinions of others. We hope you will agree.</p>
-					<p>If you want to contribute please do. Email us with suggestions. Contribute questions you think are important. Share this site with a friend or loved one. As we gather feedback new features will continue to be added.</p>
+					Instead of turning your opinion into private assets, share them with the public. We will never sell information gathered here.</p>
+					<p>We are not hear to bottle you up and sell you to the highest bidder. The purpose of GraphWhy is to shed light on the beliefs of other in a straight forward fashion.
+					It is a serious problem when society a society does not know the opinions its members. We hope you will agree.</p>
+					<p>If you want to contribute please do. Email us with suggestions. Contribute questions you think are important. Share this site with a friend or loved one.</p>
 					<br/>
 					<p className='mui--pull-right'>Best Regards,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p><br/><br/>
-					<p className='mui--pull-right'>Alexander McNulty,<br/> Thomas Shepard,<br/>Christopher Banh</p>
-					<br/><br/>
-					<br/>
+					<p className='mui--pull-right'>Alexander McNulty,<br/> Thomas Shepard,<br/>Christopher Banh,<br/>Paul Merrill,<br/>Max Cunningham</p>
+					<span className='mui--clearfix'></span>
 				</div>
 				<br/>
 				<h4>Contact Information</h4>
@@ -666,7 +672,6 @@ var AboutUs = React.createClass ({
 				<br/>
 					<p>Alexander.McNulty92@gmail.com</p>
 					<p>(408)348-9804</p>
-					<p>16388 Los Gatos Almaden Rd. 95032, Los Gatos, California</p>
 				</div>
 				<br/>
 			</div>
@@ -681,54 +686,77 @@ delete by id localhost:port/delete/voter._id
 show by voter id localhost:port/showvoter/voter._id
 show all voters localhost:port/showvoters
 increment voter localhost:port/incrementvoter/voter._id/optionnumber
-
-
 if you create a new question here, create a voter for that question id, should
 probably check to see if that question exists using showvoters
-
-
 */
 
 var QUESTIONS = [
 	{
 		id: 0,
-		route:["FederalDebt", "/"],
-		category: "Question",
-		breadcrumb: "Federal Debt",
-		title		: "Should the USA begin paying off it's FederalDebt",
+		route:["technology", "/"],
+		category: "Technology",
+		breadcrumb: "Bitcoin",
+		title		: "How long will Bitcoin hold its value?",
 		options :	[
-								" A - Yes, absolutly",
-								" B - Yes, mostly",
-								" C - Yes, somewhat",
-								" D - Neutral",
-								" D - Somewhat no",
-								" F - Mostly no",
-								" G - Absolutly not"
+								" A - Less than 1 year",
+								" B - 1 years",
+								" C - 2 to 3 years",
+								" D - 4 to 8 years",
+								" E - 9 to 15 years",
+								" F - 16 to 25 years",
+								" G - 26 to 40 years",
+								" H - 41 or more years"
 							],
-		votes 	: [
-								"5",   //E
-								"6",   //D
-								"9",   //C
-								"10",  //B
-								"1"    //An
-							],
-		comments: [	
-								{
-									vote:"",
-									name:"",
-									title:"",
-									date:"",
-									comment:""
-								}
-							],
+		comments: [{	vote:"", 	name:"",	title:"",		date:"",	comment:""	}],
+
 		active: true
 	},
 	{
 		id: 1,
+		route:["Relationships", "/"],
+		category: "Relationships",
+		breadcrumb: "family vs society",
+		title		: "Which is more important, family or society?",
+		options :	[
+								" A - Family, absolutely",
+								" B - Family, mostly",
+								" C - Family, somewhat",
+								" D - Neutral",
+								" E - Society, somewhat",
+								" F - Society, mostly",
+								" G - Society, absolutely",
+								" H - None of the above"
+							],
+		comments: [{	vote:"", 	name:"",	title:"",		date:"",	comment:""	}],
+
+		active: true
+	},
+	{
+		id: 2,
+		route:["FederalDebt", "/"],
+		category: "Question",
+		breadcrumb: "Federal Debt",
+		title		: "Should the USA begin paying off their federal debt?",
+		options :	[
+								" A - Yes, absolutely",
+								" B - Yes, mostly",
+								" C - Yes, somewhat",
+								" D - Neutral",
+								" E - Somewhat no",
+								" F - Mostly no",
+								" G - Absolutely not",
+								" H - None of the above"
+							],
+		comments: [{	vote:"", 	name:"",	title:"",		date:"",	comment:""	}],
+
+		active: true
+	},
+	{
+		id: 3,
 		route:["FederalDebt", "/"],
 		category: "Question",
 		breadcrumb: "military",
-		title		: "Should the USA reduce military budget?",
+		title		: "Should the USA reduce their military budget?",
 		options :	[
 								" A - Yes, decrease 21% or more",
 								" B - Yes, decrease 11-20%",
@@ -736,121 +764,74 @@ var QUESTIONS = [
 								" D - It Should not change",
 								" E - No, increase 1-10%",
 								" F - No, increase 11-20%",
-								" G - No, increase 21% or more"
+								" G - No, increase 21% or more",
+								" H - None of the above"
 							],
-		votes 	: [
-								"5",   //E
-								"6"   //D
-							],
-		comments: [	
-								{
-									vote:"",
-									name:"",
-									title:"",
-									date:"",
-									comment:""
-								}
-							],
+		comments: [{	vote:"", 	name:"",	title:"",		date:"",	comment:""	}],
 		active: true
 	},
 	{
-		id: 2,
+		id: 4,
 		route:"DrugLaw",
 		category: "Question",
 		breadcrumb: "Drug Law",
 		title		: "Should the USA legalize all drugs?",
 		options :	[
-								" A - Yes, absolutly",
+								" A - Yes, absolutely",
 								" B - Yes, mostly",
 								" C - Somewhat yes",
 								" D - Neutral",
 								" E - Somewhat No",
 								" F - No, mostly not",
-								" G - No, absolutly not"
+								" G - No, absolutely not",
+								" H - None of the above"
 							],
-		votes 	: [
-								"5",   //E
-								"2",   //D
-								"8",   //C
-								"11",  //B
-								"9"    //A
-							],
-		comments: [	
-								{
-									vote:"",
-									name:"",
-									title:"",
-									date:"",
-									comment:""
-								}
-							],
+		comments: [{	vote:"", 	name:"",	title:"",		date:"",	comment:""	}],
+
 		active: false
 	},
 	{
-		id: 3,
+		id: 5,
 		route:["BetterWorld", "/"],
 		category: "Question",
 		breadcrumb: "Better World",
 		title		: "Based on your values, is the world becoming a better place?",
 		options :	[
-								" A - Yes absolutly",
+								" A - Yes absolutely",
 								" B - Mostly yes",
 								" C - Somewhat yes",
 								" D - Neutral",
 								" E - Somewhat no",
 								" F - Mostly no",
-								" G - Absolutly not"
+								" G - Absolutely not",
+								" H - None of the above"
 							],
-		votes 	: [
-								"5",   //E
-								"6"   //D
-							],
-		comments: [	
-								{
-									vote:"",
-									name:"",
-									title:"",
-									date:"",
-									comment:""
-								}
-							],
+		comments: [{	vote:"", 	name:"",	title:"",		date:"",	comment:""	}],
+
 		active: true
 	},
 		{
-		id: 4,
+		id: 6,
 		route:["Happiness", "/"],
 		category: "Question",
 		breadcrumb: "Happiness",
 		title		: "Are you happy?",
 		options :	[
-								" A - Yes, absolutly",
+								" A - Yes, absolutely",
 								" B - Yes, mostly",
 								" C - Yes, somewhat",
 								" D - I am not sure",
 								" E - Somewhat not",
 								" F - Mostly not",
-								" F - Absolutly not"
+								" G - Absolutely not",
+								" H - None of the above"
 							],
-		votes 	: [
-								"5",   //E
-								"6",   //D
-								"9",   //C
-								"10",  //B
-								"1"    //An
-							],
-		comments: [	
-								{
-									vote:"",
-									name:"",
-									title:"",
-									date:"",
-									comment:""
-								}
-							],
+		comments: [{	vote:"", 	name:"",	title:"",		date:"",	comment:""	}],
+
 		active: true
 	},
 	{
-		id: 5,
+		id: 7,
 		route:["WorkEthic", "/"],
 		category: "Question",
 		breadcrumb: "Happiness",
@@ -858,32 +839,19 @@ var QUESTIONS = [
 		options :	[
 								" A - I push my limits everyday!",
 								" B - I work very hard.",
-								" B - I work hard.",
-								" C - So so",
-								" D - I don't work hard.",
-								" E - I hardly ever work.",
-								" F - I don't work hard at all!"
+								" C - I work hard.",
+								" D - So so",
+								" E - I don't work hard.",
+								" F - I hardly ever work.",
+								" G - I don't work hard at all!",
+								" H - None of the above"
 							],
-		votes 	: [
-								"5",   //E
-								"6",   //D
-								"9",   //C
-								"10",  //B
-								"1"    //An
-							],
-		comments: [	
-								{
-									vote:"",
-									name:"",
-									title:"",
-									date:"",
-									comment:""
-								}
-							],
+		comments: [{	vote:"", 	name:"",	title:"",		date:"",	comment:""	}],
+
 		active: true
 	},
 	{
-		id: 6,
+		id: 8,
 		route:["Veganism", "/"],
 		category: "Question",
 		breadcrumb: "Veganism",
@@ -895,36 +863,23 @@ var QUESTIONS = [
 								" D - Neutral",
 								" E - I somewhat oppose Veganism.",
 								" F - I mostly oppose Veganism.",
-								" G - I strongly oppose Veganism."
+								" G - I strongly oppose Veganism.",
+								" H - None of the above"
 							],
-		votes 	: [
-								"5",   //E
-								"6",   //D
-								"9",   //C
-								"10",  //B
-								"1"    //An
-							],
-		comments: [	
-								{
-									vote:"",
-									name:"",
-									title:"",
-									date:"",
-									comment:""
-								}
-							],
+		comments: [{	vote:"", 	name:"",	title:"",		date:"",	comment:""	}],
+
 		active: true
 	},
 	{
-	id: 7,
+	id: 9,
 	route:"AboutUs",
 	category: "Info",
 	breadcrumb: "About Us",
 	title: "About Us",
 	options : [],
 	votes: [],
-	comments: 			"<div className='mui-col-xs-12 mui-col-sm-10 mui-col-sm-offset-1 aboutUs'><br/><br/><h1> About Us </h1><h4>Where am I?</h4><div className='box'><p>Welcome to GraphWhy.org. Our objective is to educate the American public on important social issues.</p></div><br/><h4> The Problem </h4><div className='box'><p>We believe, that most political conversations are filled with sh*t.</p><p>We believe, that American media fills the mind of the public with cr*p.</p><p>We believe, that the US working class if getting f*cked.</p></div><br/><h4> The Solution </h4><div className='box'><p>Share your opinions with everyone </p><p>Understand the opinions of others </p><p>Scrutinize the authorities in that space</p></div><br/><h4> How </h4><div className='box'><p>Share your opinions with everyone </p><p>Understand the opinions of others </p><p>Scrutinize the authorities in that space</p></div><br/><h4> Support </h4><div className='box'><p>GraphWhy.org currently does not allow anyone to ask questions, and does not allow anyone to leave comments. If you would like to contribute more than a vote please email Alexander.McNulty92@gmail.com</p></div></div>"}
-
+	comments: ""
+	}
 ];
 
 

@@ -48,7 +48,6 @@ h1{
 }
 .drawer.fixed.mui-col-sm-3.mui-col-lg-2{
 	display:block;
-	overflow: scroll;
 	background-color: #fefefe;
 	padding:0px;
     -webkit-transition: width 1s; /* Safari 3.1 to 6.0 */
@@ -109,11 +108,22 @@ h1{
 	margin-left:10px;	
 	color:#444;
 }
+.drawer .sub {
+		overflow: scroll;
+		height: 100%;
+}
 .drawer ul ul span{
 	color:#444;
 }
 .drawer ul ul a{
 	color:#444;
+}
+
+.drawer .menuPin{
+	position: absolute !important;
+	bottom: 0 !important;
+	width: 100%;
+	background-color: #fefefe;
 }
 .drawer ul ul .fakeRoot{
 	border-top: 1px solid #dfdfdf;
@@ -271,6 +281,9 @@ h1{
 .signin-social{
 	text-align: center;
 }
+.center .box ul.signin{
+	list-style: none !important;
+}
 .signin-social img{
 	margin:5px 0px 5px 0px; 
 }
@@ -299,7 +312,11 @@ div.mui-checkbox{
 	float:left;
 	margin-top: 1.5px;
 	margin-left: 2px;
-	  transform: rotate(180deg);
+	margin-right:20px;
+	transform: rotate(180deg);
+	svg{
+		margin-left:-30px;
+	}
 }
 
 .labelTEMP{

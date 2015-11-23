@@ -30,7 +30,7 @@ mongoose.connect("mongodb://"+config.database+":27017/", function (err, res) {
   console.log ('Succeeded connected to db');
 }});
 
-app.use('/', express.static(path.join(__dirname,'public')));
+app.use('/', express.static(path.join(__dirname,'../pub')));
 
 app.use(function(req,res,next){
   if(req.session && req.session.user){
@@ -81,10 +81,14 @@ console.log('logged out')
   res.send('oh');
 });
 
-app.get('/createvoter/:id', function(req, res, next){
+app.get('/createvoter/:id/:num', function(req, res, next){
+  var tempArr = [];
+  for(var i = 0; i < req.params.num; i++){
+  	tempArr.push(0)
+  }
   var temp = new votes.model({ 
   	  questionid: req.params.id,
-	  poll:[0,0,0,0,0,0,0]
+	  poll:tempArr
   });
   temp.save(function(err,data){
     if(err) res.send("saved: failed");
@@ -176,17 +180,17 @@ app.get('/resetvoters', function( req, res, next){
 	});
 });
 
-app.get('/deletevoters', function(req, res, next){
-	votes.model.remove().exec();
-	res.send('deleted')
-});
+//**app.get('/deletevoters', function(req, res, next){
+	//**votes.model.remove().exec();
+	//**res.send('deleted')
+//**});
 
-app.get('/delete/:id', function(req,res,next){
-  votes.model.findOne({_id:req.params.id}).remove(function(err){
-    if(err) res.send("failed");
-    else res.send("removed: "+req.params.id);
-  });
-});
+//**app.get('/delete/:id', function(req,res,next){
+  //**votes.model.findOne({_id:req.params.id}).remove(function(err){
+    //**if(err) res.send("failed");
+    //**else res.send("removed: "+req.params.id);
+  //**});
+//**});
 
 app.post('/users', function(req, res, next){
 	var encryptedPasswordInput = require('crypto').createHash('md5').update(req.body.password).digest('hex');
@@ -211,26 +215,20 @@ app.get('/users', function(req,res,next){
 	});
 });
 
-app.get('/users', function(req,res,next){
-	User.model.find({phone:req.params.phone}, function(err, user){
-		if(err) res.send({status:400, data:null, message:err});
-		else res.send({status:200, data:user, message:user.phone+" Fetched"})
-	});
-});
 
-app.delete('/users', function(req, res, next){
-	User.model.remove().exec();
-	res.send({status:200, data:null, message:"Deleted "+User});
-})
+//**app.delete('/users', function(req, res, next){
+	//**User.model.remove().exec();
+	//**res.send({status:200, data:null, message:"Deleted "+User});
+//**})
 
 //deletes a user
 //urlparams: DELETE:/api/v0.1/users/PHONENUMBER
-function deleteUser(req, res){
-	User.model.findOne({_id:req.params.phone}).remove(function(err){
-		if(err) res.send({status:400, data:null, message:err});
-		else res.send({status:200, data:null, message:req.params.phone+" Removed"});
-	});
-}
+//**function deleteUser(req, res){
+	//**User.model.findOne({_id:req.params.phone}).remove(function(err){
+		//**if(err) res.send({status:400, data:null, message:err});
+		//**else res.send({status:200, data:null, message:req.params.phone+" Removed"});
+	//**});
+//**}
 //deletes all users
 //urlparams: DELETE:/api/v0.1/users/
 
