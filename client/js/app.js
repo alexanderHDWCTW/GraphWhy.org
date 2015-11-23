@@ -587,8 +587,8 @@ var Login = React.createClass({
 					<br/>
 					<div className='mui-col-xs-6'>
 					<span>coming:</span>
-					<img className="standard-img" src="client/img/signin-facebook.png" />
-					<img className="standard-img" src="client/img/signin-google.png" />
+					<img className="standard-img" src="img/signin-facebook.png" />
+					<img className="standard-img" src="img/signin-google.png" />
 					</div>
 					<div className='mui-col-xs-6'>
 						<button onClick={this.props.loginfunc} className="mui-btn mui-btn--small mui-btn--primary mui--pull-right">Submit</button>
@@ -631,8 +631,8 @@ var Signup = React.createClass({
 					<br/>
 					<div className='mui-col-xs-6'>
 					<span>coming:</span>
-					<img className="standard-img" src="client/img/signin-facebook.png" />
-					<img className="standard-img" src="client/img/signin-google.png" />
+					<img className="standard-img" src="img/signin-facebook.png" />
+					<img className="standard-img" src="img/signin-google.png" />
 					</div>
 					<div className='mui-col-xs-6'>
 						<button onClick={this.props.regisfunc} className="mui-btn mui-btn--small mui-btn--primary mui--pull-right">Submit</button>
