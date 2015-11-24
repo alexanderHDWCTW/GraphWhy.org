@@ -871,7 +871,26 @@ var QUESTIONS = [
 		active: true
 	},
 	{
-	id: 9,
+		id: 9,
+		route:["Values", "/"],
+		category: "Values",
+		breadcrumb: "Money vs. Morals",
+		title		: "What is more important to you, money or morals?",
+		options :	[
+								" A - Money, absolutely",
+								" B - Money, mostly",
+								" C - Money, somewhat",
+								" D - Neutral",
+								" E - Morals, somewhat",
+								" F - Morals, mostly",
+								" G - Morals, absolutely",
+								" H - None of the above"
+							],
+		comments: [{	vote:"", 	name:"",	title:"",		date:"",	comment:""	}],
+		active: true
+	},
+	{
+	id: 10,
 	route:"AboutUs",
 	category: "Info",
 	breadcrumb: "About Us",
