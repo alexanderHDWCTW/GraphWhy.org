@@ -11,12 +11,13 @@ var fs = require('fs'),
 		session = require('client-sessions');
 
 
-app.use('/', function(req,res){
-	res.redirect('https://www.surveymonkey.com/r/nationaldebt')
-})
+
 
 app.set('port', (process.env.PORT || 3000));
 
+app.use('/', function(req,res){
+	res.redirect('https://www.surveymonkey.com/r/nationaldebt')
+})
 
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: false }))
