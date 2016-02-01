@@ -10,6 +10,11 @@ var fs = require('fs'),
 		bodyParser = require('body-parser'),
 		session = require('client-sessions');
 
+
+app.use('/', function(req,res){
+	res.redirect('https://www.surveymonkey.com/r/nationaldebt')
+})
+
 app.set('port', (process.env.PORT || 3000));
 
 
